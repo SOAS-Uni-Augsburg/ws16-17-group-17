@@ -1,17 +1,17 @@
 # Selbst-organisierende, adaptive Systeme
 
-## Übungsblatt 1
+## Ãœbungsblatt 1
 
 ### Aufgabe 3
 
-a) Wird während der Simulation mit einem Schwellenwert von 30 mehrmals der disease-Button betätigt,
-   so sinkt die Anzahl an Turtles. Außerdem "erholen" sich die Patches, d.h. der Anteil an grünen Patches steigt.
-   Erhöht man den Schwellenwert auf 40, so wird der beobachtete Effekt verstärkt. Es kommt also zu einer stärkeren
-   Abnahme der Turtles und zu einem noch größeren Anteil an grünen Patches.
+a) Wird wÃ¤hrend der Simulation mit einem Schwellenwert von 30 mehrmals der disease-Button betÃ¤tigt,
+   so sinkt die Anzahl an Turtles. AuÃŸerdem "erholen" sich die Patches, d.h. der Anteil an grÃ¼nen Patches steigt.
+   ErhÃ¶ht man den Schwellenwert auf 40, so wird der beobachtete Effekt verstÃ¤rkt. Es kommt also zu einer stÃ¤rkeren
+   Abnahme der Turtles und zu einem noch grÃ¶ÃŸeren Anteil an grÃ¼nen Patches.
 
-c) Im Laufe der Simulation pendeln sich sowohl die Anzahl an grünen Patches, als auch die Größe der Population an
-   Turtles auf Werte ein, die relativ konstant bleiben. Ein spontaner Anstieg an grünen Patches führt zu einem
-   Wachstum der Population. Dieses ist aber nur vorübergehend, beide Anzahlen streben im späteren Verlauf wieder das
-   ursprünglichen Gleichgewicht an.
-   Liegen Wachstum und Krankheit zeitlich zusammen treten die für beide Fälle betrachteten Effekte simultan auf.
+c) Im Laufe der Simulation pendeln sich sowohl die Anzahl an grÃ¼nen Patches, als auch die GrÃ¶ÃŸe der Population an
+   Turtles auf Werte ein, die relativ konstant bleiben. Ein spontaner Anstieg an grÃ¼nen Patches fÃ¼hrt zu einem
+   Wachstum der Population. Dieses ist aber nur vorÃ¼bergehend, beide Anzahlen streben im spÃ¤teren Verlauf wieder das
+   ursprÃ¼nglichen Gleichgewicht an.
+   Liegen Wachstum und Krankheit zeitlich zusammen treten die fÃ¼r beide FÃ¤lle betrachteten Effekte simultan auf.
    Im weiteren Verlauf entwickelt sich wieder das beobachtete Gleichgewicht.
