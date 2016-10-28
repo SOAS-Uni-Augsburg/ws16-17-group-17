@@ -17,6 +17,8 @@ end
 ;; PRE: none
 ;; POST: y-current equals y(0); y-new equals y(1)
 to initialize
+  set y-current y0
+  set y-new y-current * R * (1 - y-current)
   ;; here your code
 end
 
@@ -25,7 +27,8 @@ end
 ;; PRE: y-current equals y(t); y-new equals y(t+1)
 ;; POST: y-current equals y(t+1); y-new equals y(t+2)
 to transformFunc
-
+  set y-current y-new
+  set y-new y-current * R * (1 - y-current)
 end
 
 
@@ -120,7 +123,6 @@ to draw-parabola  ; draws parabola representing logistic map for given value of 
   ]
   ask turtles [die]
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 293
@@ -349,6 +351,76 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+24
+80
+196
+113
+R
+R
+0
+4.0
+3.64
+0.01
+1
+NIL
+HORIZONTAL
+
+SLIDER
+23
+121
+195
+154
+y0
+y0
+0
+1
+0.3
+0.1
+1
+NIL
+HORIZONTAL
+
+MONITOR
+50
+266
+117
+311
+NIL
+y-current
+17
+1
+11
+
+MONITOR
+47
+320
+104
+365
+NIL
+y-new
+17
+1
+11
+
+PLOT
+34
+404
+234
+554
+y-current
+NIL
+NIL
+0.0
+10.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot y-current"
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -667,7 +739,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.2.1
+NetLogo 5.3.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
