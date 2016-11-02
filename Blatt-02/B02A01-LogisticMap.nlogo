@@ -9,7 +9,7 @@ globals [y-current y-new y-current' y-new' num-turtles-created turtlex0-who turt
 ;; PRE R_ in [0, 4.0), y in [0, 1]
 ;; POST Result of logistic map
 to-report logisticMap [R_ y]
-
+  report R_ * y * (1 - y)
 end
 
 ;; the initialization makes sure y-current and y-new are
@@ -18,7 +18,7 @@ end
 ;; POST: y-current equals y(0); y-new equals y(1)
 to initialize
   set y-current y0
-  set y-new y-current * R * (1 - y-current)
+  set y-new logisticMap R y-current ;; inlined: set y-new R * y-current * (1 - y-current)
   ;; here your code
 end
 
@@ -28,7 +28,7 @@ end
 ;; POST: y-current equals y(t+1); y-new equals y(t+2)
 to transformFunc
   set y-current y-new
-  set y-new y-current * R * (1 - y-current)
+  set y-new logisticMap R y-current
 end
 
 
