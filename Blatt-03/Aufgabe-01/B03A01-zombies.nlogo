@@ -1,5 +1,5 @@
-turtles-own [infected]
-                  
+turtles-own [infected immune energy]
+
 to setup
   clear-all
   setup-turtles
@@ -8,25 +8,34 @@ end
 
 to setup-turtles
   set-default-shape turtles "person"
-  
+
   create-turtles population-size
-  
+
   ; determine the number of zombies that are initially created
   let number-of-zombies ((initial-zombie-percentage * population-size) / 100)
-  
+  let number-of-immune ((population-size - number-of-zombies) * immune-percentage / 100)
   ask turtles [
+    set energy initial-energy
     ; set turtle on random position
     setxy random-xcor random-ycor
-
     ifelse (count turtles with [infected = true] < number-of-zombies) [
       ; make the turtle a zombie
       set infected true
+      set immune false
       set color red
     ]
     [
       ; make the turtle a human
+      ifelse (count turtles with [immune = true] < number-of-immune) [
       set infected false
+      set immune true
+      set color green
+      ]
+      [
+      set infected false
+      set immune false
       set color grey
+      ]
     ]
   ]
 end
@@ -35,17 +44,72 @@ to go
   ; let all turtles move around
   ask turtles [
     move
+    if infected = true [loose-energy]
+    check-death
   ]
-  
+
   ; zombies attack humans if there are any on the same patch
   ask turtles with [infected = true] [
-    if(any? turtles-here with [infected = false]) [
-      attack-human
+    if(any? turtles-here with [infected = false and immune = false]) [
+      ifelse random 100 < resistance-percentage [
+        die
+      ]
+      [
+        attack-human
+      ]
+
     ]
   ]
-  
+
+  ; healthy and immune humans reproduce themselves
+;  ask turtles with [infected = false] [ ; immune are always not infected
+;    if(any? turtles-here with [infected = false]) [
+;     if random 100 <= reproduction-percentage  [
+;      hatch 1 [ ; FIXME too many
+;              set energy initial-energy
+;              set infected false
+;              set color gray
+;              if random 100 <= reproduce-immune-percentage [
+;               set immune true
+;               set color green
+;              ]
+;      ]
+;     ]
+;    ]
+;  ]
+
+  ask patches [
+    let turtle-count count turtles-here with [infected = false] / 2
+
+    ask turtles-here with [infected = false] [
+      if (random 100 <= reproduction-percentage) and (turtle-count > 0) [
+        set turtle-count turtle-count - 1
+        hatch 1 [ ; hatch no possible in patch context
+          set energy initial-energy
+          set infected false
+          set color gray
+          set immune false ; optional?
+          if random 100 <= reproduce-immune-percentage [
+            set immune true
+            set color green
+          ]
+        ]
+      ]
+    ]
+  ]
+
+  ; humans die
+;  let dead-humans-count count turtles with [infected = false] * human-death-percentage / 100
+;
+;  ask turtles with [infected = false] [
+;    if dead-humans-count > 0 [
+;      set dead-humans-count dead-humans-count - 1
+;      die
+;    ]
+;  ]
+
   tick
-  
+
   ; stop the simulation if there aren't any turtles left
   if count turtles = 0 [
     stop
@@ -57,22 +121,38 @@ to move
   ; turn randomly left or right by at most 180° and move one step ahead
   right (random-float 360) - 180
   forward 1
+  set label energy
 end
 
 
 to attack-human
-  ask turtles-here with [infected = false][
+  let bite-count 0
+  ask turtles-here with [infected = false and immune = false][
     ; transform the human into a zombie
     set infected true
     set color red
+    set bite-count bite-count + 1
   ]
+  set energy energy + bite-count * bite-energy-gain
+end
+
+;to bite-human
+;  set energy energy + bite-energy-gain
+;end
+
+to loose-energy
+  set energy energy - energy-loss-per-tick
+end
+
+to check-death
+  if energy < 0 [die]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-210
-10
-715
-536
+273
+23
+778
+549
 16
 16
 15.0
@@ -145,10 +225,10 @@ NIL
 HORIZONTAL
 
 PLOT
-722
-12
-1088
-177
+785
+25
+1151
+190
 Humans vs. Zombies
 time
 count
@@ -162,6 +242,7 @@ true
 PENS
 "Humans" 1.0 0 -3026479 true "" "plot count turtles with [infected = false]"
 "Zombies" 1.0 0 -2674135 true "" "plot count turtles with [infected = true]"
+"Immune" 1.0 0 -13840069 true "" "plot count turtles with [immune = true]"
 
 SLIDER
 12
@@ -172,7 +253,7 @@ initial-zombie-percentage
 initial-zombie-percentage
 0
 100
-10
+2
 1
 1
 NIL
@@ -196,10 +277,10 @@ NIL
 1
 
 MONITOR
-737
-196
-794
-241
+800
+209
+857
+254
 Humans
 count turtles with [infected = false]
 17
@@ -207,15 +288,146 @@ count turtles with [infected = false]
 11
 
 MONITOR
-807
-197
-865
-242
+870
+210
+928
+255
 Zombies
 count turtles with [infected = true]
 17
 1
 11
+
+SLIDER
+22
+230
+194
+263
+bite-energy-gain
+bite-energy-gain
+0
+100
+50
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+23
+269
+195
+302
+energy-loss-per-tick
+energy-loss-per-tick
+0
+100
+2
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+20
+305
+192
+338
+initial-energy
+initial-energy
+0
+100
+70
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+21
+343
+193
+376
+immune-percentage
+immune-percentage
+0
+100
+1
+1
+1
+NIL
+HORIZONTAL
+
+MONITOR
+942
+208
+999
+253
+immune
+count turtles with [immune = true]
+17
+1
+11
+
+SLIDER
+20
+390
+208
+423
+reproduction-percentage
+reproduction-percentage
+0
+100
+0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+19
+438
+239
+471
+reproduce-immune-percentage
+reproduce-immune-percentage
+0
+100
+0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+24
+494
+198
+527
+resistance-percentage
+resistance-percentage
+0
+100
+45
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+23
+541
+215
+574
+human-death-percentage
+human-death-percentage
+0
+100
+10
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -597,7 +809,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.1.0
+NetLogo 5.3.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
