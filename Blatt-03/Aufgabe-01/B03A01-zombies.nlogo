@@ -82,14 +82,14 @@ to go
     let turtle-count count turtles-here with [infected = false] / 2
 
     ask turtles-here with [infected = false] [
-      if (random 100 <= reproduction-percentage) and (turtle-count > 0) [
+      if (random 100 < reproduction-percentage) and (turtle-count > 0) [
         set turtle-count turtle-count - 1
         hatch 1 [ ; hatch no possible in patch context
           set energy initial-energy
           set infected false
           set color gray
           set immune false ; optional?
-          if random 100 <= reproduce-immune-percentage [
+          if random 100 < reproduce-immune-percentage [
             set immune true
             set color green
           ]
@@ -253,7 +253,7 @@ initial-zombie-percentage
 initial-zombie-percentage
 0
 100
-2
+10
 1
 1
 NIL
@@ -307,7 +307,7 @@ bite-energy-gain
 bite-energy-gain
 0
 100
-50
+30
 1
 1
 NIL
@@ -378,7 +378,7 @@ reproduction-percentage
 reproduction-percentage
 0
 100
-0
+5
 1
 1
 NIL
@@ -408,7 +408,7 @@ resistance-percentage
 resistance-percentage
 0
 100
-45
+5
 1
 1
 NIL
@@ -423,7 +423,7 @@ human-death-percentage
 human-death-percentage
 0
 100
-10
+5
 1
 1
 NIL
