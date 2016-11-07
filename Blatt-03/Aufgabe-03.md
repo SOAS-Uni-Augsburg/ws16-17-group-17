@@ -71,3 +71,31 @@ des Performancemaßes `P'`:
 Der Simple Agent ist nun nicht mehr rational, weil er zwischen den Kacheln hin
 und her springt, wenn sie sauber sind. Das wird von dem neuen Performancemaß
 bestraft.
+
+c) Bieten auf einen Gegenstand bei einer Auktion
+|         Performance        |    Environment    | Actuators | Sensors |
+|----------------------------|-------------------|-----------|---------|
+| Erhalten des Gegenstandes  | Andere Teilnehmer | Hände,    | Augen,  |
+| Kaufpreis des Gegenstandes | Auktionsleiter    | Stimme    | Ohren   |
+|                            | Gegenstand        |           |         |
+
+Suche nach Wrackteilen mit autonomem Unterwasser-Fahrzeugen
+|         Performance        |    Environment    | Actuators | Sensors      |
+|----------------------------|-------------------|-----------|--------------|
+| Gefundene Wrackteile       | Andere Teilnehmer | Propeller | Kompass      |
+| Verbrauchte Energie        | Gesteine          | Steuer    | Tiefensensor |
+|                            | Meer              | Motor     | Sonar        |
+|                            | andere Schiffe    |           | Radar        |
+|                            | Tiere             |           |              |
+|                            | Mensch            |           |              |
+
+Intelligenter Stromverbrauch: Zu Zeiten hoher Strompreise sollen geplante
+enerieintensive Vorgänge verschoben werden.
+|         Performance        |    Environment    | Actuators | Sensors      |
+|----------------------------|-------------------|-----------|--------------|
+| Gefundene Wrackteile       | Andere Teilnehmer | Propeller | Kompass      |
+| Verbrauchte Energie        | Gesteine          | Steuer    | Tiefensensor |
+|                            | Meer              | Motor     | Sonar        |
+|                            | andere Schiffe    |           | Radar        |
+|                            | Tiere             |           |              |
+|                            | Mensch            |           |              |
