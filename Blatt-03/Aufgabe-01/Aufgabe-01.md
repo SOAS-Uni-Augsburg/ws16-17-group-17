@@ -16,3 +16,11 @@ nicht-immunen Menschen abnimmt, können sich die Zombies ab einem gewissen Punkt
 nicht mehr vermehren.
 Deswegen sterben sie letzten Endes aus wobei zumindest die immunen Menschen
 übrig bleiben.
+
+d) Dadurch, dass der Anteil der immunen Menschen auch wächst, immune Menschen
+aber auch nicht-immune Menschen hervorbringt, entstehen immer nicht-immune
+Menschen als Futter für die Zombies. Dadurch sterben die Zombies, für unsere
+getesteten Parameter, nicht aus, sondern alle Populationen wachsen
+kontinuierlich an.
+
+e)
