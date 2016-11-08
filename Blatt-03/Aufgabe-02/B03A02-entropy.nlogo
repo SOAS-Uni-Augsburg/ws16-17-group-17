@@ -1,37 +1,69 @@
-
+globals [current-entropy max-entropy]
 
 to setup
   clear-all
-  
+
+  calculate-max-entropy
+
   set-default-shape turtles "circle"
-  
+
   ; resize the world according to the world-size variable
   resize-world (- world-size) world-size (- world-size) world-size
-  
+
   ; create a number of beans
   create-turtles bean-count
-  
+
   ; place all beans on the same random patch
   let x random-xcor
   let y random-ycor
   ask turtles [
     setxy x y
   ]
- 
-  reset-ticks 
+
+  reset-ticks
 end
 
 to go
+  update-current-entropy
+
   ; random move
   move
-  
+
   tick
 end
 
 to move
   ask turtles [
-    rt random 360
-    fd 1
+    rt random 360 ; rt is the same as right
+    fd 1 ; fd is the same as forward
+  ]
+end
+
+to update-current-entropy
+  set current-entropy 0 ; reset previous entropy calculation
+  ask patches [
+    let beans-here-count count turtles-here
+
+    ; If there are no beans on this patch the probability of specific bean to be here is 0
+    ; and 0 * log 0 2 is 0 as we defined. Adding of 0 to the result can be omitted.
+    if beans-here-count > 0 [
+      let bean-probability-here beans-here-count / bean-count
+      set current-entropy current-entropy - bean-probability-here * log bean-probability-here 2
+      ]
+  ]
+end
+
+to calculate-max-entropy
+  let patch-count count patches
+  ifelse bean-count <= patch-count [ ; only if bean-count <= patch-count we can use simplified calculation
+    ; in this case there are bean-count patches with one bean
+    ; max-entropy = - bean-count * (1/bean-count) * lb (1/bean-count) = - lb (1/bean-count) = lb bean-count
+    set max-entropy log bean-count 2
+  ]
+  [ ; if bean-count > patch-count
+    ; there are patch-count patches with (bean-count / patch-count) beans
+    ; max-entropy =  - patch-count * (bean-count / patch-count) / bean-count * lb ((bean-count / patch-count) / bean-count) = - lb (1/patch-count) = lb patch-count
+    set max-entropy log patch-count 2
   ]
 end
 @#$#@#$#@
@@ -125,6 +157,25 @@ NIL
 NIL
 NIL
 1
+
+PLOT
+10
+131
+210
+281
+Entropy
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"current-entropy" 1.0 0 -16777216 true "" "plot current-entropy"
+"max-entropy" 1.0 0 -2674135 true "" "plot max-entropy"
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -469,7 +520,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.1.0
+NetLogo 5.3.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
