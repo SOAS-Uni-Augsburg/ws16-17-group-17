@@ -1,9 +1,12 @@
+extensions [sound]
+globals [sound-played]
 turtles-own [infected immune energy]
 
 to setup
   clear-all
   setup-turtles
   reset-ticks
+  set sound-played false
 end
 
 to setup-turtles
@@ -99,21 +102,35 @@ to go
   ]
 
   ; humans die
-;  let dead-humans-count count turtles with [infected = false] * human-death-percentage / 100
-;
-;  ask turtles with [infected = false] [
-;    if dead-humans-count > 0 [
-;      set dead-humans-count dead-humans-count - 1
-;      die
-;    ]
+  let dead-humans-count count turtles with [infected = false] * human-death-percentage / 100
+
+  ask turtles with [infected = false] [
+    if dead-humans-count > 0 [
+      set dead-humans-count dead-humans-count - 1
+      die
+    ]
+  ]
+
+    ;check-winning-conditions
+      if (count turtles with [infected = false]) = 0 and sound-played = false [
+    sound:play-sound-and-wait "zombies.wav"
+    output-print "zombies win!"
+    set sound-played true
+    stop
+  ]
+  if (count turtles with [infected = true]) = 0 and sound-played = false [
+    sound:play-sound-and-wait "humans.WAV"
+    output-print "humans win!"
+    set sound-played true
+    stop
+  ]
+
+  ; stop the simulation if there aren't any turtles left
+;  if count turtles = 0 [
+;    stop
 ;  ]
 
   tick
-
-  ; stop the simulation if there aren't any turtles left
-  if count turtles = 0 [
-    stop
-  ]
 end
 
 
@@ -146,6 +163,21 @@ end
 
 to check-death
   if energy < 0 [die]
+end
+
+to check-winning-conditions
+  if (count turtles with [infected = false]) = 0 and sound-played = false [
+    sound:play-sound-and-wait "zombies.wav"
+    output-print "zombies win!"
+    set sound-played true
+    stop
+  ]
+  if (count turtles with [infected = true]) = 0 and sound-played = false [
+    sound:play-sound-and-wait "cheer.wav"
+    output-print "humans win!"
+    set sound-played true
+    stop
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -253,7 +285,7 @@ initial-zombie-percentage
 initial-zombie-percentage
 0
 100
-10
+5
 1
 1
 NIL
@@ -307,7 +339,7 @@ bite-energy-gain
 bite-energy-gain
 0
 100
-30
+40
 1
 1
 NIL
@@ -322,7 +354,7 @@ energy-loss-per-tick
 energy-loss-per-tick
 0
 100
-2
+5
 1
 1
 NIL
@@ -393,7 +425,7 @@ reproduce-immune-percentage
 reproduce-immune-percentage
 0
 100
-0
+10
 1
 1
 NIL
@@ -408,7 +440,7 @@ resistance-percentage
 resistance-percentage
 0
 100
-5
+50
 1
 1
 NIL
@@ -417,13 +449,13 @@ HORIZONTAL
 SLIDER
 23
 541
-215
+226
 574
 human-death-percentage
 human-death-percentage
 0
 100
-5
+1
 1
 1
 NIL
