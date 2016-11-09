@@ -89,13 +89,34 @@ Suche nach Wrackteilen mit autonomem Unterwasser-Fahrzeugen
 |                            | Tiere             |           |              |
 |                            | Mensch            |           |              |
 
-Intelligenter Stromverbrauch: Zu Zeiten hoher Strompreise sollen geplante
+Intelligenter Stromverbrauch: Zu Zeiten hoher Strompreise sollen geplante,
 enerieintensive Vorgänge verschoben werden.
-|         Performance        |    Environment    | Actuators | Sensors      |
-|----------------------------|-------------------|-----------|--------------|
-| Gefundene Wrackteile       | Andere Teilnehmer | Propeller | Kompass      |
-| Verbrauchte Energie        | Gesteine          | Steuer    | Tiefensensor |
-|                            | Meer              | Motor     | Sonar        |
-|                            | andere Schiffe    |           | Radar        |
-|                            | Tiere             |           |              |
-|                            | Mensch            |           |              |
+|           Performance          |           Environment        |      Actuators     | Sensors      |
+|--------------------------------|------------------------------|--------------------|--------------|
+| Gesamtkosten über den Zeitraum | Eine Firma:                  | Mitarbeiter        | Server       |
+| Anzahl verschobener Vorgänge   | Geräte die Energie benötigen | Energieverbraucher | Mitarbeiter  |
+|                                | Arbeitszeiten Mitarbeiter    |                    |              |
+|                                | Deadlines                    |                    |              |
+|                                | Kunden (Abhängigkeiten)      |                    |              |
+|                                | Ggf. Stell- und Lagerplätze  |                    |              |
+|                                | Resourcenangebot             |                    |              |
+
+d) Siehe Staubsauger-Zustandsmaschine.pdf
+Nicht-determinismus kann für ein zufälliges Ablaufen der Felder genutzt werden.
+Dies würde dann zu einem *random walk* ähnlichen Verhalten führen und vielleicht
+eine erwartete optimale Effizienz liefern.
+
+Da die Wahrnehmung in dieser Antwort nur der Zustand der Kachel ist, auf der
+sich der Staubsauger gerade befindet kann sein im Zustandsdiagramm
+vorgeschlagenes Verhalten nicht durch eine Agentenfunktion auf der Menge der
+Wahrnehmungsfolgen dargestellt werden.
+
+Dazu müssten die Wahrnehmungen auch noch den Ort des Staubsaugers enthalten.
+Dann könnte ein Teil der Agentenfunktion so aussehen:
+
+|  Wahrnemungsfolge   | Aktion |
+|---------------------|--------|
+| (*, {(0,0), Clean}) |   Up   |
+| (*, {(0,1), Dirty}) |  Suck  |
+| (*, {(0,1), Clean}) |   Up   |
+| (*, {(0,2), Clean}) |  Right |
