@@ -1,0 +1,42 @@
+% Für Arbeiten auf Englisch
+\documentclass{article}
+
+% Für Arbeiten auf Deutsch
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+\pagestyle{plain}
+
+\begin{document}
+
+\section*{Aufgabe 3}
+	\begin{enumerate}
+		\item [a)]
+			$G = \langle N, (A_i)_{i \in N}, (u_i)_{i \in N} \rangle$ \\
+			$N = \{ a, b, c \}$\\
+			$A_a = A_b = A_c = \{ \mathit{cachen}, \mathit{holen}\}$\\
+			
+			$u_i = - c_i \footnote{Da die Kosten minimiert werden sollen.} = 
+				\begin{cases}
+					- 1 & \textit{$A_i$ cacht Datei}\\
+					- |SP(i,j)| \cdot d_i & sonst
+				\end{cases}
+			$
+		\item [b)]
+			Nur $b$ cacht.
+		\item [c)]
+			\begin{tabular}{| c | c |} \hline
+				 & a \\ \hline
+				b & \begin{tabular}{ c | c | c} 
+						& chacht & holt \\ \hline
+						cacht & $-1, -1$ & $-1, -0.5$  \\ \hline
+						holt & $-0.5, -1$ & $\infty, \infty$ \\ 
+					\end{tabular} \\ \hline   
+			\end{tabular}
+		\item [d)] ToDo
+	\end{enumerate}
+
+
+\end{document}
