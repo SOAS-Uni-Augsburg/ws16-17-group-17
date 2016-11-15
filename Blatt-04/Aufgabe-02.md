@@ -28,7 +28,27 @@ Für Spieler 2 maxima der Zeilen markieren (nur 2. Komponente des Tupels betrach
 Zellen, wo beide Zahlen markiert sind, sind im Nash-Gleichgewicht
 
 e)
-Alle von den Beispielen sind Nash-Equilibria.
+Angenommen die Nutzenfunktion beider Agenten ist die *eigene
+Gewinnmaximierung*, dann ist
+
+- (0.3, 0.7) ein Nash-Gleichgewicht, da 0.3 + 0.7 = 1 und eine niedrigere Wahl
+             des Anteils eine Verschlechterung zur Folge hätte. Eine Erhöhung
+             würde die Summe über 1 wachsen lassen sodass der Spieler 0 Gewinn
+             machen würde; eine Verschlechterung bzgl. der Nutzenfunktion.
+- (0.5, 0.5) Auch ein Nach-Gleichgewicht mit dem gleichen Argument wie bei dem
+             vorigen Punkt.
+- (1.0, 1.0) Dies ist auch ein Nash-Gleichgewicht, da der Nutzen beider Spieler
+             0 ist und keine einseitige Änderung im zulässigen Auswahlbereich
+             a∈[0.0, 1.0] den Nutzen des Spielers größer 0 machen würde.
+
+Angenommen die Nutzenfunktion beider Agenten ist die *Gewinnminimierung seines
+"Gegners"*, dann ist
+
+- (0.3, 0.7) ist kein Nash-Gleichgewicht, da jeder Spieler seinen Anteil erhöhen
+             kann um dem Gegnerischen Spieler einen Gewinn von 0 zu bescheren.
+- (0.5, 0.5) ist auch kein Nash-Gleichgewicht, mit selbem Argument wie zuvor.
+- (1.0, 1.0) ist ein Nash-Gleichgewicht, da jede andere Wahl des Anteils den
+             Gewinn des Gegners bei 0 lassen oder auf 1 heben würde.
 
 f)
 Wir gehen von der on-demand Produktion aus.
