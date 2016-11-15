@@ -51,7 +51,7 @@ Nash-Gleichgewicht: einer fährt weiter, andere weicht aus, da keiner den Nutzen
 kann
 
 c)
-Algo für gemischte Strategien kommt erstin der nächsten Vorlesung vor!
+TODO: Algo für gemischte Strategien kommt erst am Mittwoch vor, dann anschauen
 
 
 
