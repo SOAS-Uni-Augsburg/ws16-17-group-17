@@ -54,7 +54,6 @@
 			$G = \langle N, (A_i)_{i \in N}, (u_i)_{i \in N} \rangle$ \\
 			$N = \{ Spieler1, Spieler2 \}$\\
 			$A_{Spieler1} = A_{Spieler2} = \{ \mathit{ausweichen}, \mathit{weiterfahren}\}$\\
-			
 			$u_{Spieler1} = u_{Spieler2} = ausweichen \times weiterfahren \rightarrow \mathbb{R}$
 			
 			\begin{tabular}{| c | c |} \hline
@@ -71,7 +70,27 @@
 			Nash-Gleichgewicht: einer fährt weiter, andere weicht aus, da keiner den Nutzen im Nachhinein vergrößern
 			kann.
 		\item [c)]
-
+			\begin{tabular}{| c | c |} \hline
+				& Spieler2 \\ \hline
+				Spieler1 & \begin{tabular}{ c | c | c} 
+					& ausweichen & weiterfahren \\ \hline
+					ausweichen & $3, 3$ & $1, 4$  \\ \hline
+					weiterfahren & $4, 1$ & $0, 0$ \\ 
+				\end{tabular} \\ \hline   
+			\end{tabular}
+			\\
+			\begin{align*}
+			p \cdot 3 + (1 - p) \cdot 1 &= p \cdot 4 + (1 - p) \cdot 0\\
+			3p + (1 - p) &= 4p\\
+			2p + 1 &= 4p\\
+			1 &= 2p\\
+			\frac{1}{2} &= p
+			\end{align*}
+			
+			anlalog ergibt sich $q = \frac{1}{2}$. Beide Spieler sollten also jeweils in 50\% der Fälle ausweichen und in den anderen 50\% weiterfahren.
+					
+		
+		
 	\end{enumerate}
 
 \end{document}
