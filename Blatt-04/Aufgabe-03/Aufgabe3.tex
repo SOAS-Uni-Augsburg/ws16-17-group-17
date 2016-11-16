@@ -18,10 +18,11 @@
 			$N = \{ a, b, c \}$\\
 			$A_a = A_b = A_c = \{ \mathit{cachen}, \mathit{holen}\}$\\
 			
-			$u_i = - c_i \footnote{Da die Kosten minimiert werden sollen.} = 
+			$u_i = \footnote{Da die Kosten minimiert werden sollen.} \frac{1}{c_i} = 
 				\begin{cases}
-					- 1 & \textit{$A_i$ cacht Datei}\\
-					- |SP(i,j)| \cdot d_i & sonst
+					1 & \textit{$A_i$ cacht Datei}\\
+					0 & \textit{Kein erreichbarer Agent chacht}\\
+					\frac{1} {|SP(i,j)| \cdot d_i} & sonst
 				\end{cases}
 			$
 		\item [b)]
@@ -31,15 +32,22 @@
 				 & a \\ \hline
 				b & \begin{tabular}{ c | c | c} 
 						& cacht & holt \\ \hline
-						cacht & $-1, -1$ & $-1, -0.5$  \\ \hline
-						holt & $-0.5, -1$ & $\infty, \infty$ \\ 
+						cacht & $1, 1$ & $1, 2$  \\ \hline
+						holt & $2, 1$ & $0, 0$ \\ 
 					\end{tabular} \\ \hline   
 			\end{tabular}
 		\item [d)]
-			Agent $b$ hat die maximale Lesehäufigkeit $d_b=3$ und cacht.
-			Agenten $a$, $c$, $d$ und $f$ cachen nicht, da für sie
-			$c_{i \rightarrow b} < 1$ ist. Agent $e$ cacht. \\
-			ToDo Erzeugt dieser Algorithmus stets ein Nash-Gleichgewicht?
+		\begin{tabular}{| c | c | c |}
+			\hline 
+			Iteration & N & S \\ \hline
+			init & $\{a,b,c,d,e,f\}$ & $\o$  \\ \hline
+			1 & $\{b\}$ & $\{c,e\}$  \\ \hline
+			2\footnotemark & $\{b,c\}$ oder $\{b,e\}$ & $\{e\}$ oder $\{c\}$  \\ \hline
+			3 & $\{b,c,e\}$ & $\o$ \\
+			\hline 
+		\end{tabular}
+		\footnotetext{2 Möglichkeiten, da $d_c = d_e = 2$.}\\\\
+			Die Agenten $b, c$ und $e$ cachen. Am Ende des Alorithmus' gilt $c_{i \leftarrow j} \le 1$ für alle Agenten $A_i$, da diese entweder entfernt werden (falls $c_{i \leftarrow j} < 1$) oder die Datei cachen ($c_{i \leftarrow j} = 1$). Alle Agenten die nicht cachen könnten ihre Kosten also lediglich auf 1 erhöhen. Entscheidet sich ein cachender Agent die Datei zu holen, so sind seine Kosten größer als 1, da dies das Kriterium für die Aufnahme in die Menge der cachenden Agenten war. Durch einseitiges Abweichen kann kein Agent seine Situation verbessern, es handelt sich also um ein Nash-Equilibrium.
 	\end{enumerate}
 
 
