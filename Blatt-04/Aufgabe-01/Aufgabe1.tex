@@ -1,0 +1,77 @@
+% Für Arbeiten auf Englisch
+\documentclass{article}
+
+% Für Arbeiten auf Deutsch
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+\pagestyle{plain}
+
+\begin{document}
+
+\section*{Aufgabe 1}
+	\begin{enumerate}
+		\item [a)]
+		Unter der Annahme, dass beide Spieler ihren Gewinn maximieren wollen, würde
+		ich den höchst möglichen Betrag x wählen. Da beide Spieler mehr oder weniger
+		den gleichen Betrag bekommen, der das Minimum von beiden genannten Beträgen ist,
+		sollten beide ziemlich hoch sein. Einen niedrigeren Betrag zu wählen, nur um
+		2 Euro mehr zu bekommen macht keinen Sinn, wenn man damit rechnen muss, dass der
+		andere auch die Strategie des Unterbietens wählt. Denn dann müsste man iterativ
+		den Verlust minimieren versuchen und würde schließlich doch bei $<10$ Euro landen.
+		
+		Demnach würde ich folgende zwei Möglichkeiten der nennbaren Betragsbereiche
+		unterscheiden:
+		
+		1. Möglichkeit:\\ 
+		Der Betrag den der Versicherungsvertreter ohne nachzufragen akzeptiert ist in [2, 101],
+		nur der geschätzte Betrag ist in [2, 100].
+		
+		Persönlich würde ich eine 1 Googol bieten in der Hoffnung, dass der andere auch
+		einen lächerlich hohen Betrag wählt. Denn dann erhalten wir beide einen
+		lächerlich hohen Betrag was ausgesprochen cool wäre. Dann gibt es
+		nur 2 Möglichkeiten:
+		1. Der andere Spieler wählt einen Betrag x, der darunter liegt, dann bekomme ich
+		(x-2) Euro, mei schade. Das liegt aber vermutlich immer noch ziemlich nahe an
+		100 Euro es sei denn der andere Spieler ist doof. Oder aber
+		2. Er hat einen lächerlich höheren Betrag gewählt, dann bekommen wir beide
+		immernoch etwa 1 Googol Euro. Awesome!
+		
+		2. Möglichkeit:\\
+		Der Betrag, den die Spieler nennen dürfen ist in [2, 100], so würde ich 100 Euro
+		wählen.
+		Wollte man einen höheren Gewinn erzielen, hätte man nur
+		die Möglichkeit 99 Euro zu bieten und (!) der andere Spieler müsste 100 Euro wählen.
+		Dann würde der andere Spieler 97 Euro erhalten. Auch noch ein akzeptabler Betrag im
+		Vergleich dazu, dass einer der Spieler weniger als 97 Euro bietet und damit beide
+		weniger als 100 Euro bekämen.
+
+		\item [b)]
+			$G = \langle N, (A_i)_{i \in N}, (u_i)_{i \in N} \rangle$ \\
+			$N = \{ Spieler1, Spieler2 \}$\\
+			$A_{Spieler1} = A_{Spieler2} = \{ \mathit{ausweichen}, \mathit{weiterfahren}\}$\\
+			
+			$u_{Spieler1} = u_{Spieler2} = ausweichen \times weiterfahren \rightarrow \mathbb{R}$
+			
+			\begin{tabular}{| c | c |} \hline
+				& Spieler2 \\ \hline
+				Spieler1 & \begin{tabular}{ c | c | c} 
+					& ausweichen & weiterfahren \\ \hline
+					ausweichen & $b, b$ & \textcolor{red}{$c, a$}  \\ \hline
+					weiterfahren & \textcolor{red}{$a, c$} & $d, d$ \\ 
+				\end{tabular} \\ \hline   
+			\end{tabular}
+			
+			mit $a > b > c > d$\\
+			
+			Nash-Gleichgewicht: einer fährt weiter, andere weicht aus, da keiner den Nutzen im Nachhinein vergrößern
+			kann.
+		\item [c)]
+
+	\end{enumerate}
+
+\end{document}
