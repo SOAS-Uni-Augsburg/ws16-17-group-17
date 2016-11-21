@@ -36,6 +36,10 @@ Universität Augsburg
 }
 \date{Fr., 25.11.2016}
 
+\newcommand{\E}{\mathbb{E}}
+
+
+
 \begin{document}
 
 \frame{\titlepage}
@@ -58,6 +62,45 @@ Universität Augsburg
 \end{frame}
 
 \begin{frame}
+\frametitle{Aufgabe 1}
+\framesubtitle{d)}
+
+\begin{columns}[c]
+\column{0.5\textwidth}
+\centering
+\begin{tabular}{r|c|c|}
+    & l & r \\
+    \hline
+l & $x, 2$ & $0, 0$ \\
+r & $0, 0$ & $2, 2$ \\
+    \hline
+\end{tabular}
+
+\column{0.5\textwidth}
+Nash-Gleichgewicht $(s_1, s_2)$ mit $s_1(l) = p, s_2(l) = q$.\\
+Gesucht $p(x), q(x)$.
+\end{columns}
+
+\begin{block}{$\E u_1(l, s_2) = \E u_1(r, s_2)$ \hfill Sp. 1 ist indifferent gegenüber Sp. 2}
+\begin{align*}
+s_2(l)u_1(l,l) + s_2(r)u_1(l,r) = s_2(l)u_1(r,l) + s_2(r)u_1(r,r)
+& \Leftrightarrow & 
+qx & = (1-q)2 \\
+& \Rightarrow &
+q & = \frac{2}{x+2}
+\end{align*}
+\end{block}
+
+\begin{block}{$\E u_2(s_1, l) = \E u_2(s_1, r)$ \hfill Sp. 2 ist indifferent gegenüber Sp. 1}
+\begin{align*}
+s_1(l)u_2(l,l) + s_1(r)u_2(l,r) = s_1(l)u_2(r,l) + s_1(r)u_2(r,r)
+& \Leftrightarrow &
+2p& = 2(1-p) \\
+& \Rightarrow &
+p & = \frac{1}{2}
+\end{align*}
+\end{block}
+
 \end{frame}
 
 \end{document}
