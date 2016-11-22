@@ -65,6 +65,20 @@ Universität Augsburg
 \begin{frame}
 	\frametitle{Aufgabe 1}
 	\framesubtitle{a)}
+	Die iterative Elimination strikt dominanter Strategien kann unabhängig von der Reihenfolge
+	der eliminierten Strategien ausgeführt werden. Daraus können sich algorithmische Vorteile
+	ergeben. Allerdings gilt dies im Allgemeinen nicht für schwach dominierte Aktionen (also reine Strategien). Zeigen Sie anhand des folgenden Beispiels, dass die Reihenfolge der Elimination Auswirkungen auf den Ausgang eines Spiels haben kann.
+	
+	\begin{block}{Schwach dominante Aktion}
+		Eine Aktion $a_i$ ist eine \textit{schwach dominante Aktion}, wenn für alle $\mathbf{a}_{-i} \in \mathcal{A}_{-i}$ und alle $a_i^{'} \in A_i$ gilt:\\
+		\centering
+		$u_i(\mathbf{a}_{-i}, a_i) \ge u_i(\mathbf{a}_{-i}, a_i^{'})$
+	\end{block}
+\end{frame}	
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{a)}
 	\begin{block}{Ein möglicher Weg}	
 		\centering
 		\begin{tabular}{r|c|c|}
@@ -108,6 +122,7 @@ Universität Augsburg
 	\end{block}
 	\begin{itemize}
 		\item Im dritten Zustand ist $m$ schwach dominant gegenüber $b$ und umgekehrt. Es kann also wahlweise $m$ oder $b$ eliminiert werden.
+		\item Die iterative Elimination kann in diesem Beispiel, bei entsprechend gewählten Eliminationsschritten, zu allen Zuständen außer $\langle b, l \rangle$ und $\langle t, r \rangle$ führen.
 	\end{itemize}
 \end{frame}
 
