@@ -112,6 +112,104 @@ Universität Augsburg
 \end{frame}
 
 \begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{b)}
+
+	\centering
+	\begin{tabular}{r|c|c|c|}
+		& l & m & r \\
+		\hline
+		u & $\textcolor{orange}{3}, \textcolor{red}{8}$ & $\textcolor{orange}{2}, 0$ & $1, 2$ \\
+		d & $0, 0$ & $1, \textcolor{red}{7}$ & $\textcolor{orange}{8}, 2$ \\
+		\hline
+	\end{tabular}
+
+	\begin{itemize}
+		\item Naiver Algorithmus zeigt, dass es sich beim Aktionsprofil $(u, l)$ um ein Nash-Gleichgewicht handelt.
+	\end{itemize}
+
+	\begin{block}{Dominanzlösbarkeit}
+		Ein Spiel ist \textit{dominanzlösbar}, falls die iterative Elimination exakt einen Ausgang (ein Aktionsprofil) liefert.
+		Dieses ist zugleich das einzige Nash-Gleichgewicht.
+	\end{block}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{b)}
+
+	\centering
+	\begin{tabular}{r|c|c|c|}
+		& $l$ & $m$ & $r$ \\
+		\hline
+		$u$ & $3, 8$ & $2, 0$ & $1, 2$ \\
+		$d$ & $0, 0$ & $1, 7$ & $8, 2$ \\
+		\hline
+	\end{tabular}
+
+	\begin{block}{Iterative Elimination}
+		Strikt dominierte Strategien werden eliminiert.
+	\end{block}
+
+	% TODO: strikt dominierte Strategie/Aktion definieren! Für strikt dominante Aktion Folien S. 19
+	% strikt dominierte Folien S. 6
+
+	% evtl. Unterscheidung nach reinen/gemischten Strategien
+	% Reine Strategien: Eine strikt dominierte Aktion: es gibt mindestens eine Aktion, die diese Aktion strikt dominiert
+	% Gemischte Strategien: Strikt dominierte Strategie: es gibt mindestens eine Strategie, die diese Strategie strikt dominiert
+
+	\begin{block}{Reine Strategie}
+		Spieler wählen genau eine Aktion.
+	\end{block}
+
+	\begin{itemize}
+		\item Es gibt keine strikt dominierte reine Strategie (= Aktion) \\
+		$\Rightarrow$ Das Spiel ist für reine Strategien nicht dominanzlösbar
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{b)}
+
+	\centering
+	\begin{tabular}{r|c|c|c|}
+		& $l$ & $m$ & $r$ \\
+		\hline
+		$u$ & $3, 8$ & $2, 0$ & $1, 2$ \\
+		$d$ & $0, 0$ & $1, 7$ & $8, 2$ \\
+		\hline
+	\end{tabular}
+
+	\begin{block}{Gemischte Strategie}
+		Spieler ziehen die Aktion nach einer Wahrscheinlichkeitsverteilung.
+	\end{block}
+
+	\begin{itemize}
+		\item Durch Randomisierung erwarteten Nutzen maximieren
+	\end{itemize}
+
+	\begin{tabular}{r|c|c|}
+		& $l \leftarrow \frac{1}{2}, m \leftarrow \frac{1}{2} $& $r$ \\
+		\hline
+		$u$ & $2.5, 4$ & $1, 2$ \\
+		$d$ & $0.5, 3.5$ & $8, 2$ \\
+		\hline
+	\end{tabular}
+
+	\begin{itemize}
+		\item In der Matrix stehen Erwartungswerte
+		\item Gemischte Strategie dominiert die reine Strategie $r$ strikt.\\
+		$\Rightarrow$ $r$ kann eliminiert werden
+	\end{itemize}
+
+	% TODO: auf der Nächsten Folie r eliminieren und weiter machen
+	% TODO: Ein Nash-Gleichgewicht in gemischten Strategien ist ein Strategieprofil, siehe Folien S. 12
+\end{frame}
+
+\begin{frame}
 \frametitle{Aufgabe 1}
 \framesubtitle{d)}
 
