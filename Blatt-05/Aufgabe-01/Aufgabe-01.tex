@@ -63,11 +63,49 @@ Universität Augsburg
 
 \begin{frame}
 \frametitle{Aufgabe 1}
+\framesubtitle{c)}
+
+\begin{columns}
+\column{0.25\textwidth}
+\begin{tabular}{r|c|c|}
+    & l & r \\
+    \hline
+l & $ 1,-1$ & $-1, 1$ \\
+r & $-1, 1$ & $ 1,-1$ \\
+    \hline
+\end{tabular}
+
+\column{0.75\textwidth}
+$s_1(l) = p$, $s_2(l) = q$
+\end{columns}
+
+\begin{block}{$\E u_1(l, s_2) = \E u_1(r, s_2)$ \hfill Sp. 1 ist indifferent gegenüber Sp. 2}
+\begin{align*}
+    & & s_2(l)u_1(l,l) + s_2(r)u_1(l,r) & = s_2(l)u_1(r,l) + s_2(r)u_1(r,r) & \\
+\Leftrightarrow &
+    & q - (1-q) & = -q + (1-q) &
+\Leftrightarrow
+    q = \frac{1}{2}
+\end{align*}
+\end{block}
+
+\begin{block}{$\E u_2(s_1, l) = \E u_2(s_1, r)$ \hfill Sp. 2 ist indifferent gegenüber Sp. 1}
+\begin{align*}
+    & & s_1(l)u_2(l,l) + s_1(r)u_2(l,r) & = s_1(l)u_2(r,l) + s_1(r)u_2(r,r) & \\
+\Leftrightarrow &
+    & -p + (1-p) & = p - (1-p) &
+\Leftrightarrow
+    p = \frac{1}{2}
+\end{align*}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Aufgabe 1}
 \framesubtitle{d)}
 
 \begin{columns}[c]
-\column{0.5\textwidth}
-\centering
+\column{0.25\textwidth}
 \begin{tabular}{r|c|c|}
     & l & r \\
     \hline
@@ -76,8 +114,9 @@ r & $0, 0$ & $2, 2$ \\
     \hline
 \end{tabular}
 
-\column{0.5\textwidth}
-Nash-Gleichgewicht $(s_1, s_2)$ mit $s_1(l) = p, s_2(l) = q$.\\
+\column{0.75\textwidth}
+Nash-Gleichgewicht $(s_1, s_2)$ mit $s_1(l) = p$, $s_2(l) = q$.\\
+$\Rightarrow s_1(r) = 1 - p$, $s_2(r) = 1 - q$. \\
 Gesucht $p(x), q(x)$.
 \end{columns}
 
