@@ -12,6 +12,8 @@
 \usepackage{amsfonts}
 \usepackage{color}
 
+\usepackage{cancel}
+
 % Valid themes are:
 %   Antibes, Bergen, Berkeley, Berlin, Copenhagen, Darmstadt, Dresden, Frankfurt
 %   Goettingen, Hannover, Ilmenau, JuanLesPins, Luebeck, Madrid, Malmoe, Marburg
@@ -130,6 +132,28 @@ Universität Augsburg
 	\frametitle{Aufgabe 1}
 	\framesubtitle{b)}
 
+	\begin{block}{Dominanzlösbarkeit}
+		Ein Spiel ist \textit{dominanzlösbar}, falls die iterative Elimination exakt einen Ausgang (ein Aktionsprofil) liefert.
+		Dieses ist zugleich das einzige Nash-Gleichgewicht.
+	\end{block}
+	\centering
+	Ist folgendes Spiel dominanzlösbar?
+
+	\begin{tabular}{r|c|c|c|}
+		& $l$ & $m$ & $r$ \\
+		\hline
+		$u$ & $3, 8$ & $2, 0$ & $1, 2$ \\
+		$d$ & $0, 0$ & $1, 7$ & $8, 2$ \\
+		\hline
+	\end{tabular}
+
+\end{frame}
+
+% Folie mit Nash-Gleichgewicht kann weggelassen werden
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{b) Nash-Gleichgewicht}
+
 	\centering
 	\begin{tabular}{r|c|c|c|}
 		& l & m & r \\
@@ -140,12 +164,39 @@ Universität Augsburg
 	\end{tabular}
 
 	\begin{itemize}
-		\item Naiver Algorithmus zeigt, dass es sich beim Aktionsprofil $(u, l)$ um ein Nash-Gleichgewicht handelt.
+		\item Naiver Algorithmus zur Suche von Nash-Gleichgewichten zeigt, dass es sich beim Aktionsprofil $(u, l)$ um ein Nash-Gleichgewicht handelt.
 	\end{itemize}
 
-	\begin{block}{Dominanzlösbarkeit}
-		Ein Spiel ist \textit{dominanzlösbar}, falls die iterative Elimination exakt einen Ausgang (ein Aktionsprofil) liefert.
-		Dieses ist zugleich das einzige Nash-Gleichgewicht.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{b) Iterative Elimination}
+
+	% TODO: evtl. Unterscheidung nach reinen/gemischten Strategien
+	% Reine Strategien: Eine strikt dominierte Aktion: es gibt eine Aktion, die diese Aktion strikt dominiert
+	% Gemischte Strategien: Strikt dominierte Strategie: es gibt eine Strategie, die diese Strategie strikt dominiert
+
+	% Definitionen:
+	% strikt dominierte Aktion Folien S. 6 (nicht das gleiche wie strikt dominante Aktion Folien S. 19)
+	\begin{block}{Strikt dominierte Strategie}
+		% eigentlich Strikt dominierte Aktion, steht aber so in
+		% http://gki.informatik.uni-freiburg.de/teaching/ss09/gametheory/spieltheorie.pdf
+		% TODO: auch strikt dominierte Strategie genauer definieren
+		Eine Aktion $a_i \in A_i$ heißt \textit{strikt dominiert}, falls es eine Aktion $a^+_i \in A_i$ gibt, so dass für
+		alle $\mathbf{a}_{-i} \in \mathcal{A}_{-i}$ gilt:\\
+		\centering
+		$u_i(\mathbf{a}_{-i}, a^+_i) > u_i(\mathbf{a}_{-i}, a_i)$
+	\end{block}
+	Es ist nicht rational, strikt dominierte Strategien zu spielen.
+
+
+	% http://gki.informatik.uni-freiburg.de/teaching/ss09/gametheory/spieltheorie.pdf 2.1.1
+	\begin{block}{Iterative Elimination strikt dominierter Strategien}
+		\begin{itemize}
+			\item Streiche die Strategien, die strikt dominiert sind,\\ solange welche da sind.
+			\item Bleibt nur ein Aktionsprofil Übrig, ist das die Lösung.
+		\end{itemize}
 	\end{block}
 
 \end{frame}
@@ -163,23 +214,13 @@ Universität Augsburg
 		\hline
 	\end{tabular}
 
-	\begin{block}{Iterative Elimination}
-		Strikt dominierte Strategien werden eliminiert.
-	\end{block}
-
-	% TODO: strikt dominierte Strategie/Aktion definieren! Für strikt dominante Aktion Folien S. 19
-	% strikt dominierte Folien S. 6
-
-	% evtl. Unterscheidung nach reinen/gemischten Strategien
-	% Reine Strategien: Eine strikt dominierte Aktion: es gibt mindestens eine Aktion, die diese Aktion strikt dominiert
-	% Gemischte Strategien: Strikt dominierte Strategie: es gibt mindestens eine Strategie, die diese Strategie strikt dominiert
-
 	\begin{block}{Reine Strategie}
 		Spieler wählen genau eine Aktion.
 	\end{block}
 
 	\begin{itemize}
-		\item Es gibt keine strikt dominierte reine Strategie (= Aktion) \\
+		\item Es gibt keine strikt dominierte reine Strategie (= Aktion) 
+		\item Iterative Elimination  geht nicht weiter und liefert keine eindeutige Lösung\\
 		$\Rightarrow$ Das Spiel ist für reine Strategien nicht dominanzlösbar
 	\end{itemize}
 
@@ -203,14 +244,14 @@ Universität Augsburg
 	\end{block}
 
 	\begin{itemize}
-		\item Durch Randomisierung erwarteten Nutzen maximieren
+		\item Durch geeignete Randomisierung erwarteten Nutzen maximieren
 	\end{itemize}
 
 	\begin{tabular}{r|c|c|}
 		& $l \leftarrow \frac{1}{2}, m \leftarrow \frac{1}{2} $& $r$ \\
 		\hline
-		$u$ & $2.5, 4$ & $1, 2$ \\
-		$d$ & $0.5, 3.5$ & $8, 2$ \\
+		$u$ & $2.5, \textcolor{red}{4}$ & $1, \textcolor{red}{2}$ \\
+		$d$ & $0.5, \textcolor{red}{3.5}$ & $8, \textcolor{red}{2}$ \\
 		\hline
 	\end{tabular}
 
@@ -222,6 +263,64 @@ Universität Augsburg
 
 	% TODO: auf der Nächsten Folie r eliminieren und weiter machen
 	% TODO: Ein Nash-Gleichgewicht in gemischten Strategien ist ein Strategieprofil, siehe Folien S. 12
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{b)}
+
+	\centering
+	\begin{tabular}{r|c|c|c|}
+		& $l$ & $m$ & $r$ \\
+		\hline
+		$u$ & $3, 8$ & $2, 0$ & \cancel{$1, 2$} \\
+		$d$ & $0, 0$ & $1, 7$ & \cancel{$8, 2$} \\
+		\hline
+	\end{tabular}
+	$\rightarrow$
+	\begin{tabular}{r|c|c|}
+		& $l$ & $m$ \\
+		\hline
+		$u$ & $\textcolor{orange}{3}, 8$ & $\textcolor{orange}{2}, 0$\\
+		$d$ & $\textcolor{orange}{0}, 0$ & $\textcolor{orange}{1}, 7$\\
+		\hline
+	\end{tabular}
+	$\rightarrow$
+	\begin{tabular}{r|c|c|}
+		& $l$ & $m$ \\
+		\hline
+		$u$ & $3, 8$ & $2, 0$\\
+		$d$ & \cancel{$0, 0$} & \cancel{$1, 7$}\\
+		\hline
+	\end{tabular}
+	$\rightarrow$
+	\begin{tabular}{r|c|c|}
+		& $l$ & $m$ \\
+		\hline
+		$u$ & $3, \textcolor{red}{8}$ & $2, \textcolor{red}{0}$\\
+		\hline
+	\end{tabular}
+	$\rightarrow$
+	\begin{tabular}{r|c|c|}
+		& $l$ & $m$ \\
+		\hline
+		$u$ & $3, 8$ & \cancel{$2, 0$}\\
+		\hline
+	\end{tabular}
+	$\rightarrow$
+	\begin{tabular}{r|c|}
+		& $l$\\
+		\hline
+		$u$ & $3, 8$\\
+		\hline
+	\end{tabular}
+
+	\begin{itemize}
+		\item Iterative Elimination leifert exakt einen Ausgang (ein Aktionsprofil).\\
+		% Dieses ist zugleich das einzige Nash-Gleichgewicht. TODO: evtl. Bezug zum naiven Algorithmus nehmen
+		$\Rightarrow$ Das Spiel ist für gemischte Strategien dominanzlösbar
+	\end{itemize}
+
 \end{frame}
 
 \begin{frame}
