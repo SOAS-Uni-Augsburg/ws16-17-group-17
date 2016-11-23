@@ -266,7 +266,6 @@ Universität Augsburg
 		$\Rightarrow$ $r$ kann eliminiert werden
 	\end{itemize}
 
-	% TODO: auf der Nächsten Folie r eliminieren und weiter machen
 	% TODO: Ein Nash-Gleichgewicht in gemischten Strategien ist ein Strategieprofil, siehe Folien S. 12
 \end{frame}
 
@@ -321,7 +320,7 @@ Universität Augsburg
 	\end{tabular}
 
 	\begin{itemize}
-		\item Iterative Elimination leifert exakt einen Ausgang (ein Aktionsprofil).\\
+		\item Iterative Elimination liefert exakt einen Ausgang (ein Aktionsprofil).\\
 		% Dieses ist zugleich das einzige Nash-Gleichgewicht. TODO: evtl. Bezug zum naiven Algorithmus nehmen
 		$\Rightarrow$ Das Spiel ist für gemischte Strategien dominanzlösbar
 	\end{itemize}
@@ -437,25 +436,107 @@ p & = \frac{1}{2}
 	\begin{tabular}{r|c|c|}
 		& Vertraue & Vertraue nicht \\
 		\hline
-		Spiele nicht, Stehle & $\textcolor{red}{1/1}$ & $\textcolor{red}{1/1}$ \\
-		Spiele nicht, Stehle nicht & $\textcolor{red}{1/1}$ & $\textcolor{red}{1/1}$ \\
-		Spiele, Stehle & $10/0$ & $0/2$ \\
-		Spiele, Stehle nicht & $10/0$ & $5/5$ \\
+		Spiele nicht, Stehle & $1/\textcolor{red}{1}$ & $\textcolor{orange}{1}/\textcolor{red}{1}$ \\
+		Spiele nicht, Stehle nicht & $1/\textcolor{red}{1}$ & $\textcolor{orange}{1}/\textcolor{red}{1}$ \\
+		Spiele, Stehle & $\textcolor{orange}{10}/0$ & $0/\textcolor{red}{2}$ \\
+		Spiele, Stehle nicht & $5/\textcolor{red}{5}$ & $0/2$ \\
 		\hline
-	\end{tabular}	
-		\begin{forest}
-			for tree={circle,draw, l sep=10pt}
-			[1, 
-			[1/1,rectangle,red, edge label={node[midway,left] {Spiele nicht}} ]
-			[2, edge label={node[midway,right] {Spiele}} 
+	\end{tabular}
+
+	\begin{itemize}
+		\item Naiver Algorithmus zur Suche von Nash-Gleichgewichten zeigt, dass Aktionsprofile $\bigl\langle(\textit{Spiele nicht}, Stehle), \textit{Vertraue nicht}\bigr\rangle$ und \\
+		$\bigl\langle(\textit{Spiele nicht}, \textit{Stehle nicht}), \textit{Vertraue nicht}\bigr\rangle$ Nash-Gleichgewichte sind.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{e)}
+
+	% TODO: Definiionen Teilspiel, teilspielperfekt hinzufügen
+	Nash-Gleichgewicht $\bigl\langle(\textit{Spiele nicht}, \textit{Stehle nicht}), \textit{Vertraue nicht}\bigr\rangle$ ist nicht teilspielperfekt, da
+	$\bigl\langle\textit{Stehle nicht}, \textit{Vertraue nicht}\bigr\rangle$ für Teilspielbaum ab Knoten $2$ kein Nash-Gleichgewicht ist.
+
+	\centering
+	\begin{forest}
+	for tree={circle,draw, l sep=10pt}
+		[2, edge label={node[midway,right] {Spiele}} 
 			[1, edge label={node[midway,left] {Vertraue}}
-			[10/0, rectangle, edge label={node[midway,left] {Stehle}}]
-			[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
+				[10/0, rectangle, edge label={node[midway,left] {Stehle}}]
+				[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
 			] 
 			[0/2, rectangle, edge label={node[midway,right] {Vertraue nicht}}]
+		] 
+	\end{forest}
+
+	\textbf{Induzierte Normalform}\\
+	\begin{tabular}{r|c|c|}
+		& Vertraue & Vertraue nicht \\
+		\hline
+		Stehle & $\textcolor{orange}{10}/0$ & $\textcolor{orange}{0}/\textcolor{red}{2}$ \\
+		Stehle nicht & $5/\textcolor{red}{5}$ & $\textcolor{orange}{0}/2$ \\
+		\hline
+	\end{tabular}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{e)}
+	\centering
+	\textbf{Rückwärtsinduktion}\\
+	\begin{forest}
+		for tree={circle,draw, l sep=10pt}
+		[1, 
+			[1/1,rectangle, edge label={node[midway,left] {Spiele nicht}} ]
+			[2, edge label={node[midway,right] {Spiele}} 
+				[1, edge label={node[midway,left] {Vertraue}}
+					[10/0, rectangle, edge label={node[midway,left] {Stehle}}]
+					[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
+				] 
+				[0/2, rectangle, edge label={node[midway,right] {Vertraue nicht}}]
 			] 
-			]
-		\end{forest}
+		]
+	\end{forest}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{e)}
+	\centering
+	\textbf{Rückwärtsinduktion}\\	
+	\begin{forest}
+		for tree={circle,draw, l sep=10pt}
+		[1, 
+			[1/1,rectangle, edge label={node[midway,left] {Spiele nicht}} ]
+			[2, edge label={node[midway,right] {Spiele}} 
+				[1(10/0), edge label={node[midway,left] {Vertraue}}
+					[10/0, red, rectangle, edge label={node[midway,left, color=red] {Stehle}}]
+					[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
+				] 
+				[0/2, rectangle, edge label={node[midway,right] {Vertraue nicht}}]
+			] 
+		]
+	\end{forest}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{e)}
+	\centering
+	\textbf{Rückwärtsinduktion}\\	
+	\begin{forest}
+		for tree={circle,draw, l sep=10pt}
+		[1, 
+			[1/1,rectangle, edge label={node[midway,left] {Spiele nicht}} ]
+			[2(0/2), edge label={node[midway,right] {Spiele}} 
+				[1(10/0), edge label={node[midway,left] {Vertraue}}
+					[10/0, rectangle, edge label={node[midway,left, color=red] {Stehle}}]
+					[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
+				] 
+				[0/2, red, rectangle, edge label={node[midway,right, color=red] {Vertraue nicht}}]
+			] 
+		]
+	\end{forest}
 \end{frame}
 
 \begin{frame}
@@ -466,16 +547,28 @@ p & = \frac{1}{2}
 	\begin{forest}
 		for tree={circle,draw, l sep=10pt}
 		[1(1/1), 
-		[1/1,rectangle,red, edge label={node[midway,left] {Spiele nicht}} ]
-		[2(0/2), edge label={node[midway,right] {Spiele}} 
-		[1(10/0), edge label={node[midway,left] {Vertraue}}
-		[10/0, rectangle, edge label={node[midway,left] {Stehle}}]
-		[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
-		] 
-		[0/2, rectangle, edge label={node[midway,right] {Vertraue nicht}}]
-		] 
+			[1/1,rectangle,red, edge label={node[midway,left, color=red] {Spiele nicht}} ]
+			[2(0/2), edge label={node[midway,right] {Spiele}} 
+				[1(10/0), edge label={node[midway,left] {Vertraue}}
+					[10/0, rectangle, edge label={node[midway,left, color=red] {Stehle}}]
+					[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
+				] 
+				[0/2, rectangle, edge label={node[midway,right, color=red] {Vertraue nicht}}]
+			] 
 		]
 	\end{forest}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{e)}
+
+	\begin{itemize}
+		\item Das Ergebnis der Rückwärtsinduktion ist ein teilspielperfektes Nash-Gleichgewicht.\\
+		$\Rightarrow$ Nash-Gleichgewicht $\bigl\langle(\textit{Spiele nicht}, Stehle), \textit{Vertraue nicht}\bigr\rangle$ ist teilspielperfekt.
+	\end{itemize}
+
+
 \end{frame}
 
 \end{document}
