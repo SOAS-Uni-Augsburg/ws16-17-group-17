@@ -1,17 +1,26 @@
 patches-own [
   strategy  ;; the current strategy: "random", "always cooperate", "always defect", "grim trigger", "tranquilizer", "tit for tat"
+  list-of-points ; Liste für die Punkte der letzten 8 Spiele
+  triggered ;   ┐(´•_•`)┌   Spieler wurde mindestens einmal betrogen
+  has-played ; Spieler hat diese Runde bereits gespielt
+  last-action-of-oponent ; Aktion die der letzte Gegner gewählt hat
+  points ;Punkte in den letzten 8 runden
 ]
 
 to setup
   clear-all
-  
-  let possible-strategies ["random" "always cooperate" "always defect" "grim trigger" "tranquilizer" "tit for tat"]
-  
+
+  let possible-strategies ["random" "always cooperate" "always defect" "grim trigger" "tit for tat"] ;tranquilizer entfernt
+
   ask patches [
     set strategy one-of possible-strategies
     update-color
+    set has-played false
+    set triggered false ;!!!ANPASSEN IM SPIEL!!!
+    set last-action-of-oponent "cooperate" ; Designentscheidung :) ANPASSEN
+    set list-of-points [[0]]
   ]
-  
+
   reset-ticks
 end
 
@@ -19,15 +28,67 @@ to go
   ask patches [interact]          ;; to play with one neighboring patch
   ask patches [select-strategy]   ;; adopt the strategy of the neighbor who had the highest score in the last 8 rounds
   ask patches [update-color]   ;; update patch color information
+  ask patches [set has-played false]
   tick
 end
 
 to interact  ;; patch procedure
-  ; TODO
+    if has-played = false [
+    if any? (neighbors with [has-played = false]) [ ; gibt es mindestens einen nachbarn der noch nicht gespielt hat?
+      let enemy one-of neighbors with [has-played = false]
+      let enemy-action "keine"
+      ask enemy [set enemy-action action]
+      let own-action action
+
+      ;TODO payoffs statt konstanten verwenden
+      if own-action = "cooperate" and enemy-action = "cooperate"[
+        set last-action-of-oponent "cooperate"
+        ask enemy [set last-action-of-oponent "cooperate"]
+        update-list-of-points[-1]
+        ask enemy [update-list-of-points[-1]]
+      ]
+
+      if own-action = "cooperate" and enemy-action = "defect"[
+        set triggered true
+        set last-action-of-oponent "defect"
+        update-list-of-points[-4]
+        ask enemy [update-list-of-points[0]
+          set last-action-of-oponent "cooperate"
+          ]
+      ]
+
+      if own-action = "defect" and enemy-action = "cooperate"[
+        set last-action-of-oponent "cooperate"
+        ask enemy [set triggered true
+          set last-action-of-oponent "defect"]
+        update-list-of-points[0]
+        ask enemy [update-list-of-points[-4]]
+      ]
+
+     if own-action = "defect" and enemy-action = "defect"[
+        set triggered true
+        set last-action-of-oponent "defect"
+        ask enemy [set triggered true
+          set last-action-of-oponent "defect"]
+        update-list-of-points[-3]
+        ask enemy [update-list-of-points[-3]]
+      ]
+
+    set has-played true
+    update-points
+    ask enemy [set has-played true
+      update-points
+      ]
+    ]
+  ]
 end
 
 to select-strategy  ;; patch procedure
-  ; TODO
+  let best-strategy strategy
+  ask max-n-of 1 neighbors [points][
+    set best-strategy strategy
+  ]
+  set strategy best-strategy
 end
 
 to update-color  ;; patch procedure
@@ -54,6 +115,50 @@ end
 
 ; Copyright 2002 Uri Wilensky.
 ; See Info tab for full copyright and license.
+
+to update-list-of-points [payoff]       ; fügt payoff an die liste an und entfernt das erste element falls die liste mehr als 8 elemente hat
+  set list-of-points lput payoff list-of-points
+  let counter 0
+  foreach list-of-points [set counter counter + 1]
+  if counter > 8 [
+    set list-of-points but-last list-of-points
+  ]
+end
+
+to-report action  ;liefert die Aktion des Spielers abhängig von der Strategie
+  if strategy = "random" [
+    let rand random 2
+    ifelse rand = 0 [report "defect"][report "cooperate"]
+  ]
+
+  if strategy = "always cooperate" [
+    report "cooperate"
+  ]
+
+  if strategy = "always defect" [
+    report "defect"
+  ]
+
+  if strategy = "grim trigger" [
+    ifelse triggered [report "defect"] [report "cooperate"]
+  ]
+
+  if strategy = "tit for tat" [
+    ifelse last-action-of-oponent = "defect" [report "defect"] [report "cooperate"]
+  ]
+
+;  if strategy = "tranquilizer" [  ;TODO
+;    report "cooperate"
+;  ]
+
+end
+
+to update-points
+  set points 0
+  foreach list-of-points[
+    set points points + sum ?
+  ]
+end
 @#$#@#$#@
 GRAPHICS-WINDOW
 426
@@ -249,7 +354,7 @@ In a non-iterated prisoner's dilemma, the two partners will never have to work t
            Cooperate |   (0.5, 0.5)           (0, 10)
       YOU            |
            Defect    |(10, 0)              (5, 5)
-    
+
             (x, y) = x: your score, y: your partner's score
             Note: lower the score (number of years in prison), the better.
 
@@ -264,7 +369,7 @@ In an Iterated Prisoner's Dilemma where you have more than two players and multi
            Cooperate |(1, 1)            (0, alpha)
       YOU            |
            Defect    |(alpha, 0)        (0, 0)
-    
+
             (x, y) = x: your score, y: your partner's score
             Note: higher the score (amount of the benefit), the better.
 
@@ -280,9 +385,9 @@ Each patch will either cooperate (blue) or defect (red) in the initial start of 
 
 In the subsequent round, the patch will set its old-cooperate? to be the strategy it used in the previous round.  For the upcoming round, the patch will adopt the strategy of one of its neighbors that scored the highest in the previous round.
 
-If a patch is blue, then the patch cooperated in the previous and current round.  
-If a patch is red, then the patch defected in the previous iteration as well as the current round.  
-If a patch is green, then the patch cooperated in the previous round but defected in the current round.  
+If a patch is blue, then the patch cooperated in the previous and current round.
+If a patch is red, then the patch defected in the previous iteration as well as the current round.
+If a patch is green, then the patch cooperated in the previous round but defected in the current round.
 If a patch is yellow, then the patch defected in the previous round but cooperated in the current round.
 
 
@@ -305,9 +410,9 @@ Alter the code so that the patches have a strategy to implement.  For example, i
 
 Implement these four strategies:
 
-1. Cooperate-all-the-time: regardless of neighboring patches' history, cooperate.  
-2. Tit-for-Tat:  only cooperate with neighboring patches, if they have never defected.  Otherwise, defect.  
-3. Tit-for-Tat-with-forgiveness: cooperate if on the previous round, the patch cooperated.  Otherwise, defect.  
+1. Cooperate-all-the-time: regardless of neighboring patches' history, cooperate.
+2. Tit-for-Tat:  only cooperate with neighboring patches, if they have never defected.  Otherwise, defect.
+3. Tit-for-Tat-with-forgiveness: cooperate if on the previous round, the patch cooperated.  Otherwise, defect.
 4. Defect-all-the-time: regardless of neighboring patches' history, defect.
 
 How are the cooperating and defecting patches distributed?  Which strategy results with the highest score on average?  On what conditions will this strategy be a poor strategy to use?
@@ -615,7 +720,7 @@ Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 
 @#$#@#$#@
-NetLogo 5.1.0
+NetLogo 5.3.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
