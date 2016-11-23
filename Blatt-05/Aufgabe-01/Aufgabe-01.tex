@@ -12,6 +12,10 @@
 \usepackage{amsfonts}
 \usepackage{color}
 
+\usepackage{graphicx}
+\usepackage{forest}
+\usepackage{tikz-qtree}
+
 \usepackage{cancel}
 
 % Valid themes are:
@@ -71,10 +75,11 @@ Universität Augsburg
 	der eliminierten Strategien ausgeführt werden. Daraus können sich algorithmische Vorteile
 	ergeben. Allerdings gilt dies im Allgemeinen nicht für schwach dominierte Aktionen (also reine Strategien). Zeigen Sie anhand des folgenden Beispiels, dass die Reihenfolge der Elimination Auswirkungen auf den Ausgang eines Spiels haben kann.
 	
-	\begin{block}{Schwach dominante Aktion}
-		Eine Aktion $a_i$ ist eine \textit{schwach dominante Aktion}, wenn für alle $\mathbf{a}_{-i} \in \mathcal{A}_{-i}$ und alle $a_i^{'} \in A_i$ gilt:\\
+	\begin{block}{Schwach dominierte Aktion}
+		Eine Aktion $a_i \in A_i$ heißt \textit{schwach dominiert}, falls es eine Aktion $a^+_i \in A_i$ gibt, so dass für
+		alle $\mathbf{a}_{-i} \in \mathcal{A}_{-i}$ gilt:\\
 		\centering
-		$u_i(\mathbf{a}_{-i}, a_i) \ge u_i(\mathbf{a}_{-i}, a_i^{'})$
+		$u_i(\mathbf{a}_{-i}, a^+_i) \ge u_i(\mathbf{a}_{-i}, a_i)$
 	\end{block}
 \end{frame}	
 
@@ -402,6 +407,75 @@ p & = \frac{1}{2}
 \end{align*}
 \end{block}
 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{e)}
+	Geben Sie zunächst (möglicherweise mit Hilfe der induzierten Normalform) alle Nash-Gleichgewichte in reinen Strategien an. Welche Gleichgewichte sind teilspielperfekt? Bestimmen Sie schlussendlich ein teilspielperfektes Gleichgewicht mittels Ruckwärtsinduktion.
+	\centering
+	\begin{forest}
+	for tree={circle,draw, l sep=10pt}
+	[1, 
+		[1/1,rectangle, edge label={node[midway,left] {Spiele nicht}} ]
+		[2, edge label={node[midway,right] {Spiele}} 
+			[1, edge label={node[midway,left] {Vertraue}}
+				[10/0, rectangle, edge label={node[midway,left] {Stehle}}]
+				[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
+			] 
+			[0/2, rectangle, edge label={node[midway,right] {Vertraue nicht}}]
+		] 
+	]
+	\end{forest}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{e)}
+	\centering
+	\textbf{Induzierte Normalform}\\
+	\begin{tabular}{r|c|c|}
+		& Vertraue & Vertraue nicht \\
+		\hline
+		Spiele nicht, Stehle & $\textcolor{red}{1/1}$ & $\textcolor{red}{1/1}$ \\
+		Spiele nicht, Stehle nicht & $\textcolor{red}{1/1}$ & $\textcolor{red}{1/1}$ \\
+		Spiele, Stehle & $10/0$ & $0/2$ \\
+		Spiele, Stehle nicht & $10/0$ & $5/5$ \\
+		\hline
+	\end{tabular}	
+		\begin{forest}
+			for tree={circle,draw, l sep=10pt}
+			[1, 
+			[1/1,rectangle,red, edge label={node[midway,left] {Spiele nicht}} ]
+			[2, edge label={node[midway,right] {Spiele}} 
+			[1, edge label={node[midway,left] {Vertraue}}
+			[10/0, rectangle, edge label={node[midway,left] {Stehle}}]
+			[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
+			] 
+			[0/2, rectangle, edge label={node[midway,right] {Vertraue nicht}}]
+			] 
+			]
+		\end{forest}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{e)}
+	\centering
+	\textbf{Rückwärtsinduktion}\\	
+	\begin{forest}
+		for tree={circle,draw, l sep=10pt}
+		[1(1/1), 
+		[1/1,rectangle,red, edge label={node[midway,left] {Spiele nicht}} ]
+		[2(0/2), edge label={node[midway,right] {Spiele}} 
+		[1(10/0), edge label={node[midway,left] {Vertraue}}
+		[10/0, rectangle, edge label={node[midway,left] {Stehle}}]
+		[5/5, rectangle, edge label={node[midway,right] {Stehle nicht}}]
+		] 
+		[0/2, rectangle, edge label={node[midway,right] {Vertraue nicht}}]
+		] 
+		]
+	\end{forest}
 \end{frame}
 
 \end{document}
