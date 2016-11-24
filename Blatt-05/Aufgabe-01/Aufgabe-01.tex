@@ -52,23 +52,6 @@ Universität Augsburg
 \frame{\titlepage}
 
 \begin{frame}
-\frametitle{Frame Title}
-\framesubtitle{Frame Subtitle}
-
-\begin{itemize}
-    \item Some item
-    \item another item
-\end{itemize}
-
-\begin{block}{block title}
-    asdf
-\end{block}
-\begin{align*}
-    \mathbb{P}(a|s) = \prod_{i \in N} s_i(a_i)
-\end{align*}
-\end{frame}
-
-\begin{frame}
 	\frametitle{Aufgabe 1}
 	\framesubtitle{a)}
 	Die iterative Elimination strikt dominanter Strategien kann unabhängig von der Reihenfolge
@@ -86,7 +69,7 @@ Universität Augsburg
 \begin{frame}
 	\frametitle{Aufgabe 1}
 	\framesubtitle{a)}
-	\begin{block}{Ein möglicher Weg}	
+	\begin{block}{Variante 1: t wird zuerst eliminiert}	
 		\centering
 		\begin{tabular}{r|c|c|}
 			& l & r \\
@@ -129,6 +112,54 @@ Universität Augsburg
 	\end{block}
 	\begin{itemize}
 		\item Im dritten Zustand ist $m$ schwach dominant gegenüber $b$ und umgekehrt. Es kann also wahlweise $m$ oder $b$ eliminiert werden.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{a)}
+	\begin{block}{Variante 2: b wird zuerst eliminiert}	
+		\centering
+		\begin{tabular}{r|c|c|}
+			& l & r \\
+			\hline
+			t & $2, 1$ & $0, 0$ \\
+			m & $\textcolor{green}{2}, 1$ & $\textcolor{green}{1}, 1$ \\
+			b & $\textcolor{green}{0}, 0$ & $\textcolor{green}{1}, 1$ \\
+			\hline
+		\end{tabular}
+		$\rightarrow$
+		\begin{tabular}{r|c|c|}
+			& l & r \\
+			\hline
+			t & $2, \textcolor{blue}{1}$ & $0, \textcolor{blue}{0}$ \\
+			m & $2, \textcolor{blue}{1}$ & $1, \textcolor{blue}{1}$ \\
+			\hline
+		\end{tabular}
+		$\rightarrow$
+		\begin{tabular}{r|c|}
+			& l \\
+			\hline
+			t &  $\textcolor{red}{2}, 1$ \\
+			m & $\textcolor{red}{2}, 1$ \\
+			\hline
+		\end{tabular}\\
+		$\rightarrow$
+		\begin{tabular}{r|c|}
+			& l \\
+			\hline
+			m & $2, 1$ \\
+			\hline
+		\end{tabular}
+		oder
+		\begin{tabular}{r|c|}
+			& l \\
+			\hline
+			b &  $2, 1$ \\
+			\hline
+		\end{tabular}	
+	\end{block}
+	\begin{itemize}
 		\item Die iterative Elimination kann in diesem Beispiel, bei entsprechend gewählten Eliminationsschritten, zu allen Zuständen außer $\langle b, l \rangle$ und $\langle t, r \rangle$ führen.
 	\end{itemize}
 \end{frame}
