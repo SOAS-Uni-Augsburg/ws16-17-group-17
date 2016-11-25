@@ -15,6 +15,8 @@ import java.util.Observable;
  */
 public class GameEngine extends Observable {
 	private GameBoard board;
+	
+	private Player winner;
 
 	public GameBoard getBoard() {
 		return board;
@@ -22,6 +24,10 @@ public class GameEngine extends Observable {
 
 	public void setBoard(GameBoard board) {
 		this.board = board;
+	}
+	
+	public Player getWinner() {
+		return winner;
 	}
 
 	private Map<Player, PlayStrategy> strategies;
@@ -79,6 +85,7 @@ public class GameEngine extends Observable {
 				if(board.isWonBy(turn, move)) {
 					gameMessage = "Player "+turn+" has won!";
 					terminated = true;
+					winner = turn;
 					
 				} else if (board.isFull()) {
 					// drawn

@@ -18,8 +18,9 @@ public class StrategyProvider {
 		strategies = new HashMap<String, Class<? extends PlayStrategy>>();
 		
 		// "Human", "Naive", "Random", "Reflex", "MiniMax", "AlphaBeta" 
-		strategies.put("Human", InteractiveUIStrategy.class) ;
-		strategies.put("Naive", NaiveStrategy.class) ;
+		strategies.put("Human", InteractiveUIStrategy.class);
+		strategies.put("Naive", NaiveStrategy.class);
+		strategies.put("Random", RandomStrategy.class);
 	}
 	
 	public String[] provideStrategyKeywords() {
