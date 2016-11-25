@@ -188,7 +188,7 @@ Universität Augsburg
 % Folie mit Nash-Gleichgewicht kann weggelassen werden
 \begin{frame}
 	\frametitle{Aufgabe 1}
-	\framesubtitle{b) Nash-Gleichgewicht}
+	\framesubtitle{b) Nash-Gleichgewicht mit naiven Algorithmus}
 
 	\centering
 	\begin{tabular}{r|c|c|c|}
@@ -200,7 +200,7 @@ Universität Augsburg
 	\end{tabular}
 
 	\begin{itemize}
-		\item Naiver Algorithmus zur Suche von Nash-Gleichgewichten zeigt, dass es sich beim Aktionsprofil $(u, l)$ um ein Nash-Gleichgewicht handelt.
+		\item Naiver Algorithmus zur Bestimmung von Nash-Gleichgewichten zeigt, dass es sich beim Aktionsprofil $(u, l)$ um ein Nash-Gleichgewicht handelt.
 	\end{itemize}
 
 \end{frame}
@@ -231,7 +231,7 @@ Universität Augsburg
 	\begin{block}{Iterative Elimination strikt dominierter Strategien}
 		\begin{itemize}
 			\item Streiche die Strategien, die strikt dominiert sind,\\ solange welche da sind.
-			\item Bleibt nur ein Aktionsprofil Übrig, ist das die Lösung.
+			\item Bleibt nur ein Aktionsprofil übrig, ist das die Lösung.
 		\end{itemize}
 	\end{block}
 
@@ -239,7 +239,7 @@ Universität Augsburg
 
 \begin{frame}
 	\frametitle{Aufgabe 1}
-	\framesubtitle{b)}
+	\framesubtitle{b) Iterative Elimination mit reinen Strategien}
 
 	\centering
 	\begin{tabular}{r|c|c|c|}
@@ -255,16 +255,74 @@ Universität Augsburg
 	\end{block}
 
 	\begin{itemize}
-		\item Es gibt keine strikt dominierte reine Strategie (= Aktion) 
+		\item Es gibt keine strikt dominierte reine Strategie (Aktion) 
 		\item Iterative Elimination  geht nicht weiter und liefert keine eindeutige Lösung\\
-		$\Rightarrow$ Das Spiel ist für reine Strategien nicht dominanzlösbar
+		$\Rightarrow$ Das Spiel ist nur mit reinen Strategien nicht dominanzlösbar
 	\end{itemize}
 
 \end{frame}
 
 \begin{frame}
 	\frametitle{Aufgabe 1}
-	\framesubtitle{b)}
+	\framesubtitle{b) Iterative Elimination mit gemischten Strategien}
+
+	\centering
+
+	\begin{itemize}
+		\item Lösung: durch geeignete Randomisierung strikt dominierende Strategien konstruieren
+	\end{itemize}
+
+\begin{block}{Gemischte Strategie}
+		Spieler ziehen die Aktion nach einer Wahrscheinlichkeitsverteilung.
+	\end{block}
+
+	Allgemeiner Beispiel:
+
+	\begin{tabular}{r|c|c|}
+		& l & r \\
+		\hline
+		$t \leftarrow p$ & $a, \dots$ & $d, \dots$ \\
+		$m \leftarrow (1 - p)$ & $b, \dots$ & $e, \dots$ \\
+		b & $c, \dots$ & $f, \dots$ \\
+		\hline
+	\end{tabular}
+
+	\begin{itemize}
+		\item $p$ so wählen, dass $pa + (1-p)b > c$ und $pd + (1-p)e > f$, dann ist der erwartete Nutzen der reinen Strategie "die Aktion $b$ zu wählen" kleiner, als der erwartete Nutzen der gemischten Strategie.\\
+		$\Rightarrow$ Reine Strategie wird strikt von der gemischten Strategie dominiert.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{b) Iterative Elimination mit gemischten Strategien}
+
+	\centering
+	% http://gametheory101.com/courses/game-theory-101/strict-dominance-in-mixed-strategies/
+	\begin{block}{Iterative Elimination mit gemischten Strategien}
+		\begin{itemize}
+			\item Falls eine Mischung von 2 (oder mehr) Strategien (gemischte Strategie) die 3. Strategie strikt dominiert, eliminiere die 3. Strategie, denn strikt dominierte Strategien sind nicht rational, unabhängig davon, ob reine oder gemischte Strategien sie dominieren.
+			\item Setze Iterative Elimination von strikt dominierten Strategien wie üblich fort, wenn möglich.
+		\end{itemize}
+	\end{block}
+
+	\begin{tabular}{r|c|c|c|}
+		& $l$ & $m$ & $r$ \\
+		\hline
+		$u$ & $3, \textcolor{red}{8}$ & $2, 0$ & $1, 2$ \\
+		$d$ & $0, 0$ & $1, \textcolor{red}{7}$ & $8, 2$ \\
+		\hline
+	\end{tabular}
+
+	\begin{itemize}
+		\item Spieler 2 kann bei Aktionen $l$ und $m$ den größten Nutzen erreichen.\\
+		$\Rightarrow$ diese Aktionen bei der gemischten Strategie wählen, z.B. jede mit Wahrscheinlichkeit $\frac{1}{2}$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Aufgabe 1}
+	\framesubtitle{b) Iterative Elimination mit gemischten Strategien}
 
 	\centering
 	\begin{tabular}{r|c|c|c|}
@@ -275,14 +333,18 @@ Universität Augsburg
 		\hline
 	\end{tabular}
 
-	\begin{block}{Gemischte Strategie}
-		Spieler ziehen die Aktion nach einer Wahrscheinlichkeitsverteilung.
-	\end{block}
-
 	\begin{itemize}
-		\item Durch geeignete Randomisierung erwarteten Nutzen maximieren
+		\item Matrix mit gemischter Strategie:
 	\end{itemize}
 
+	\begin{tabular}{r|c|c|}
+		& $l \leftarrow \frac{1}{2}, m \leftarrow \frac{1}{2} $& $r$ \\
+		\hline
+		$u$ & $\frac{1}{2} \cdot 3 + \frac{1}{2} \cdot 2, \frac{1}{2} \cdot 8 + \frac{1}{2} \cdot 0$ & $1, 2$ \\
+		$d$ & $\frac{1}{2} \cdot 0 + \frac{1}{2} \cdot 1, \frac{1}{2} \cdot 0 + \frac{1}{2} \cdot 7$ & $8, 2$ \\
+		\hline
+	\end{tabular}
+    $\rightarrow$    
 	\begin{tabular}{r|c|c|}
 		& $l \leftarrow \frac{1}{2}, m \leftarrow \frac{1}{2} $& $r$ \\
 		\hline
@@ -292,7 +354,7 @@ Universität Augsburg
 	\end{tabular}
 
 	\begin{itemize}
-		\item In der Matrix stehen Erwartungswerte
+		\item In dieser Matrix stehen Erwartungswerte
 		\item Gemischte Strategie dominiert die reine Strategie $r$ strikt.\\
 		$\Rightarrow$ $r$ kann eliminiert werden
 	\end{itemize}
@@ -302,7 +364,7 @@ Universität Augsburg
 
 \begin{frame}
 	\frametitle{Aufgabe 1}
-	\framesubtitle{b)}
+	\framesubtitle{b) Iterative Elimination mit gemischten Strategien}
 
 	\centering
 	\begin{tabular}{r|c|c|c|}
@@ -353,7 +415,7 @@ Universität Augsburg
 	\begin{itemize}
 		\item Iterative Elimination liefert exakt einen Ausgang (ein Aktionsprofil).\\
 		% Dieses ist zugleich das einzige Nash-Gleichgewicht. TODO: evtl. Bezug zum naiven Algorithmus nehmen
-		$\Rightarrow$ Das Spiel ist für gemischte Strategien dominanzlösbar
+		$\Rightarrow$ Das Spiel ist mit gemischten Strategien dominanzlösbar
 	\end{itemize}
 
 \end{frame}
@@ -475,7 +537,7 @@ p & = \frac{1}{2}
 	\end{tabular}
 
 	\begin{itemize}
-		\item Naiver Algorithmus zur Suche von Nash-Gleichgewichten zeigt, dass Aktionsprofile $\bigl\langle(\textit{Spiele nicht}, Stehle), \textit{Vertraue nicht}\bigr\rangle$ und \\
+		\item Naiver Algorithmus zur Bestimmung von Nash-Gleichgewichten zeigt, dass Aktionsprofile $\bigl\langle(\textit{Spiele nicht}, Stehle), \textit{Vertraue nicht}\bigr\rangle$ und \\
 		$\bigl\langle(\textit{Spiele nicht}, \textit{Stehle nicht}), \textit{Vertraue nicht}\bigr\rangle$ Nash-Gleichgewichte sind.
 	\end{itemize}
 \end{frame}
