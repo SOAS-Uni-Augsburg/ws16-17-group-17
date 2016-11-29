@@ -1,12 +1,11 @@
 package isse.model;
 
-import isse.control.ControlAction;
-import isse.model.strategies.InteractiveUIStrategy;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observer;
 import java.util.Observable;
+
+import isse.control.ControlAction;
+import isse.model.strategies.InteractiveUIStrategy;
 /**
  * Deals with the setup of the game,
  * connecting between player moves etc.

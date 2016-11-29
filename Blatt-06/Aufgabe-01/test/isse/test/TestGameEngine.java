@@ -1,6 +1,8 @@
 package isse.test;
 
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import isse.model.GameBoard;
 import isse.model.GameEngine;
@@ -9,10 +11,6 @@ import isse.model.Player;
 import isse.model.strategies.InteractiveStrategy;
 import isse.model.strategies.NaiveStrategy;
 import isse.model.strategies.RandomStrategy;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
 
 public class TestGameEngine {
 
