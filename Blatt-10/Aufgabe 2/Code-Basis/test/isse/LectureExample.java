@@ -13,15 +13,19 @@ import isse.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class LectureExample {
 
 	private final int drill = 0, insert = 1, tighten = 2;
+	
 	private TaskAgent r3;
 	private TaskAgent r2;
 	private TaskAgent r1;
+	
 	private SchedulingProblem problem;
+	
 	private Map<TaskAgent, Valuator<Shift>> typeProfile;
 	
 	@Before
@@ -45,7 +49,7 @@ public class LectureExample {
 		
 		List<TaskAgent> agents = Arrays.asList(r1, r2,r3);
 
-		problem = new SchedulingProblem(3, agents);
+		problem = new SchedulingProblem(agents.size(), agents);
 		
 		typeProfile = new HashMap<TaskAgent, Valuator<Shift>>();
 		typeProfile.put(r1, new TaskAgentValuator(r1));
@@ -71,9 +75,17 @@ public class LectureExample {
 		Assert.assertEquals(r3, shiftAssignment.get(drill));
 		Assert.assertEquals(r1, shiftAssignment.get(insert));
 		Assert.assertEquals(r3, shiftAssignment.get(tighten));
+		
+		
+		Map<TaskAgent, Double> payments = qm.getPayments(typeProfile);
+		System.out.println(payments); // TODO: ordered pretty print
+		Assert.assertEquals(payments.get(r1).doubleValue(), -20, 0.001);
+		Assert.assertEquals(payments.get(r2).doubleValue(), 0, 0.001);
+		Assert.assertEquals(payments.get(r3).doubleValue(), -23, 0.001);
 	}
 
 	@Test
+	@Ignore
 	public void testLectureExampleBonus() {
 		QuasilinearMechanism<TaskAgent, Shift> qm = new BonusCompensationMechanism(problem);
 		// make sure your selection and payment functions are implemented correctly

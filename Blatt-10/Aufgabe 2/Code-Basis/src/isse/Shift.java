@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * Beschreibt eine mögliche Taskzuweisung an Agenten/(Arbeits)Plan/ein Element x aus der Auswahlmenge X; eine Option, die der Mechanismus wählen muss
+ *
+ */
 public class Shift {
 	protected Map<Integer, TaskAgent> assignment;
 	protected double makeSpan = Double.NEGATIVE_INFINITY;
@@ -28,15 +32,21 @@ public class Shift {
 		assignment.put(index, agent);
 	}
 	
+	/**
+	 * @return die Produktionsspanne: die maximale genannte (angekündigte) Spanne unter allen Agenten
+	 */
 	public double getMakeSpan() {
 		if(makeSpan == Double.NEGATIVE_INFINITY) {
+			// Spanne für jeden Agenten berechnen: Summe der Zeiten für die an einen Agenten zugewiesenen Tasks
 			Map<TaskAgent, Double> workPerAgent = new HashMap<TaskAgent,Double>();
 			for(Entry<Integer, TaskAgent> entry : assignment.entrySet()) {
-				double work = entry.getValue().getAnnouncedTime(entry.getKey());
-				if(workPerAgent.containsKey(entry.getValue())){
-					work += workPerAgent.get(entry.getValue());
+				TaskAgent agent = entry.getValue();
+				Integer taskKey = entry.getKey();
+				double work = agent.getAnnouncedTime(taskKey);
+				if(workPerAgent.containsKey(agent)){
+					work += workPerAgent.get(agent);
 				}
-				workPerAgent.put(entry.getValue(), work);
+				workPerAgent.put(agent, work);
 			}
 			
 			// now take the maximal value of all these
@@ -45,6 +55,9 @@ public class Shift {
 		return makeSpan;
 	}
 	
+	/**
+	 * @return die gesamte summierte genannte (angekündigte) Arbeitszeit von allen Agenten
+	 */
 	public double getOverallWorkDuration() {
 		if(overallWorkDuration == Double.NEGATIVE_INFINITY) {
 			overallWorkDuration = 0.0;
@@ -57,6 +70,6 @@ public class Shift {
 	
 	@Override
 	public String toString() {
-		return "Shift duration: "+getOverallWorkDuration() + " - makespan " + getMakeSpan();
+		return "Shift duration: "+ getOverallWorkDuration() + " - makespan " + getMakeSpan();
 	}
 }
