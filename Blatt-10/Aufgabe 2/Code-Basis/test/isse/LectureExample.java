@@ -85,7 +85,6 @@ public class LectureExample {
 	}
 
 	@Test
-	@Ignore
 	public void testLectureExampleBonus() {
 		QuasilinearMechanism<TaskAgent, Shift> qm = new BonusCompensationMechanism(problem);
 		// make sure your selection and payment functions are implemented correctly
