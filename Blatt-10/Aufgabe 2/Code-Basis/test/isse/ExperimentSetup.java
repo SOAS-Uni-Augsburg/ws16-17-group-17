@@ -26,7 +26,7 @@ import isse.agents.TaskAgentValuator;
 public class ExperimentSetup {
 	@Parameters(name = "{index}: scheduling problem with {0} agents, {1} tasks and minimal time in interval [{2}, {3}]")
 	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] { { 3, 2, 1.0, 50.0 }/*, { 3, 3, 1.0, 50.0 }, { 3, 5, 1.0, 50.0 } */});
+		return Arrays.asList(new Object[][] { { 3, 2, 1.0, 50.0 }, { 3, 3, 1.0, 50.0 }, { 3, 5, 1.0, 50.0 } });
 	}
 	
 	// Parameters
@@ -60,6 +60,7 @@ public class ExperimentSetup {
 
 	protected static Random random = new Random(); // TODO: maybe set constant seed to get same test cases
 
+	
 	public static double randomInRange(double min, double max) {
 		double range = max - min;
 		double scaled = random.nextDouble() * range;
@@ -107,11 +108,12 @@ public class ExperimentSetup {
 	
 	@Test
 	public void test() {
-		int runCount = 1;
-		honestPayments = new double [30];
-		lyingPayments = new double [30];
+		int runs = 100;
+		honestPayments = new double [runs];
+		lyingPayments = new double [runs];
 		LyingAgent agentZero = null;
-		for (int x = 0; x < 60; x++){
+		LyingAgent agentOne = null;
+		for (int x = 0; x < runs; x++){
 			//setup
 			
 			HashMap<Integer, Double> timesHelper = new HashMap<Integer, Double>();
@@ -126,17 +128,16 @@ public class ExperimentSetup {
 					timesHelper.put(j,  randomMimimalTime());
 				}
 				if (i == 0){
-					if (runCount <= 30){
 						LyingAgent agent = new LyingAgent(timesHelper, true); //Agent 0 lügt
 						agents.add(i, agent);			
 						typeProfile.put(agent, new TaskAgentValuator(agent));
 						agentZero = agent;
-					}else{
-						LyingAgent agent = new LyingAgent(timesHelper, false); //Agent 0 lügt nicht
+				}
+				else if (i == 1){
+						LyingAgent agent = new LyingAgent(timesHelper, false); //Agent 0 lügt
 						agents.add(i, agent);			
 						typeProfile.put(agent, new TaskAgentValuator(agent));
-						agentZero = agent;
-					}
+						agentOne = agent;
 				}
 				else{
 					LyingAgent agent = new LyingAgent(timesHelper);
@@ -162,12 +163,8 @@ public class ExperimentSetup {
 		Map<Integer, TaskAgent> shiftAssignment = selectedShift.getAssignment();
 		Map<TaskAgent, Double> payments = qm.getPayments(typeProfile);
 		
-		if (runCount <= 30){
-			lyingPayments[runCount-1] = payments.get(agentZero);
-		}else{
-			honestPayments[runCount-31] = payments.get(agentZero);
-		}
-
+			lyingPayments[x] = payments.get(agentZero);
+			honestPayments[x] = payments.get(agentOne);
 		
 		
 		
@@ -179,7 +176,6 @@ public class ExperimentSetup {
 		// https://haifengl.github.io/smile/api/java/smile/stat/hypothesis/TTest.html
 		
 		System.out.println(problem);
-		runCount++;	
 	}
 		System.out.println("Lügner: "+Arrays.toString(lyingPayments));
 		System.out.println(mean(lyingPayments));
