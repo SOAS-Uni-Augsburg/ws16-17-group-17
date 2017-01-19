@@ -12,6 +12,14 @@ public class LyingAgent extends BasicHonestAgent {
 		super(minimalTimes);
 	}
 
+	public LyingAgent(HashMap<Integer, Double> minimalTimes, boolean lying) {
+		super(minimalTimes);
+		setLying(lying);
+		this.minimalTimes = new HashMap<Integer, Double>(minimalTimes);
+		this.announcedTimes = new HashMap<Integer, Double>(minimalTimes);
+		this.actualTimes = new HashMap<Integer, Double>(minimalTimes);
+	}
+	
 	@Override
 	public double getMinimalTime(int taskKey) {
 		return minimalTimes.get(taskKey);
@@ -40,4 +48,13 @@ public class LyingAgent extends BasicHonestAgent {
 	public void setLying(boolean isLying) {
 		this.isLying = isLying;
 	}
+
+	public static boolean isNobodyCanByTrusted() {
+		return nobodyCanByTrusted;
+	}
+
+	public static void setNobodyCanByTrusted(boolean nobodyCanByTrusted) {
+		LyingAgent.nobodyCanByTrusted = nobodyCanByTrusted;
+	}
+	
 }
