@@ -25,7 +25,7 @@ import isse.agents.TaskAgentValuator;
 public class ExperimentSetup {
 	@Parameters(name = "{index}: scheduling problem with {0} agents, {1} tasks and minimal time in interval [{2}, {3}]")
 	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] { { 3, 2, 1.0, 50.0 }, { 3, 3, 1.0, 50.0 }, { 3, 5, 1.0, 50.0 } });
+		return Arrays.asList(new Object[][] { { 3, 2, 1.0, 50.0 }/*, { 3, 3, 1.0, 50.0 }, { 3, 5, 1.0, 50.0 } */});
 	}
 	
 	// Parameters
@@ -55,6 +55,7 @@ public class ExperimentSetup {
 	public ExperimentSetup() {
 
 	}
+	
 
 	protected static Random random = new Random(); // TODO: maybe set constant seed to get same test cases
 
@@ -105,6 +106,49 @@ public class ExperimentSetup {
 	
 	@Test
 	public void test() {
+		int runCount = 1;
+		honestPayments = new double [30];
+		lyingPayments = new double [30];
+		LyingAgent agentZero = null;
+		for (int x = 0; x < 60; x++){
+			//setup
+			
+			HashMap<Integer, Double> timesHelper = new HashMap<Integer, Double>();
+			
+			List<TaskAgent> agents = new ArrayList<>();
+			
+			typeProfile = new HashMap<TaskAgent, Valuator<Shift>>();
+			
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					// we can reuse timesHelper, as BasicHonestAgent makes a copy of the map
+					timesHelper.put(j,  randomMimimalTime());
+				}
+				if (i == 0){
+					if (runCount <= 30){
+						LyingAgent agent = new LyingAgent(timesHelper, true); //Agent 0 lügt
+						agents.add(i, agent);			
+						typeProfile.put(agent, new TaskAgentValuator(agent));
+						agentZero = agent;
+					}else{
+						LyingAgent agent = new LyingAgent(timesHelper, false); //Agent 0 lügt nicht
+						agents.add(i, agent);			
+						typeProfile.put(agent, new TaskAgentValuator(agent));
+						agentZero = agent;
+					}
+				}
+				else{
+					LyingAgent agent = new LyingAgent(timesHelper);
+					agents.add(i, agent);			
+					typeProfile.put(agent, new TaskAgentValuator(agent));
+				}
+
+			}
+			
+			problem = new SchedulingProblem(agents.size(), agents);
+		
+		//eigentlicher Test
+			
 		System.out.println("Test started.");
 		System.out.println(m);
 		System.out.println(n);
@@ -117,19 +161,15 @@ public class ExperimentSetup {
 		Map<Integer, TaskAgent> shiftAssignment = selectedShift.getAssignment();
 		Map<TaskAgent, Double> payments = qm.getPayments(typeProfile);
 		
+		if (runCount <= 30){
+			lyingPayments[runCount-1] = payments.get(agentZero);
+		}else{
+			honestPayments[runCount-31] = payments.get(agentZero);
+		}
+
 		
-		honestPayments = new double [m];
-		lyingPayments = new double [m];
-		int count = 0;
-		for (TaskAgent ta : payments.keySet()){
-			honestPayments[count] = payments.get(ta);
-			count++;
-		}
-		System.out.print("\n");
-		System.out.print("Payments: ");
-		for (int i = 0; i < honestPayments.length; i++){
-			System.out.print(honestPayments[i]+"\t");
-		}
+		
+		
 		// privater Nutzen ist: payment für Agent i - tatsächlich gemessene Spanne für Agent i (TaskAgentValuator.getActualSpan)
 		
 		// LyingAgent hat globales Flag LyingAgent.nobodyCanBeTrusted und auch pro Agent kann man angeben, ob er lügt
@@ -138,5 +178,9 @@ public class ExperimentSetup {
 		// https://haifengl.github.io/smile/api/java/smile/stat/hypothesis/TTest.html
 		
 		System.out.println(problem);
+		runCount++;	
+	}
+		System.out.println(Arrays.toString(lyingPayments));
+		System.out.println(Arrays.toString(honestPayments));		
 	}
 }
