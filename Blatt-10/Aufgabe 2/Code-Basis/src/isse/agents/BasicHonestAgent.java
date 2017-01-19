@@ -30,5 +30,4 @@ public class BasicHonestAgent implements TaskAgent {
 	public double getActualTime(int taskKey) {
 		return actualTimes.get(taskKey);
 	}
-
 }

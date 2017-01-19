@@ -62,13 +62,15 @@ public class LectureExample {
 		// nothing to do yet
 	}
 
+	// TODO: in selection und payments aufteilen
 	@Test
 	public void testLectureExampleVCG() {
 		QuasilinearMechanism<TaskAgent, Shift> qm = new VCGMechanism(problem);
 		// make sure your selection and payment functions are implemented correctly
 		Shift selectedShift = qm.selection(typeProfile);
 		
-		Map<Integer, TaskAgent> shiftAssignment = selectedShift.getAssignment(); 
+		Map<Integer, TaskAgent> shiftAssignment = selectedShift.getAssignment();
+		// Die Laufzeitkomplexität des Suchalgorithmus ist O(m * n) (für jedes Task den schnellsten Agenten finden)
 		
 		System.out.println("Selected shift: " + selectedShift.toString());
 		// get the correct assignment
@@ -78,24 +80,42 @@ public class LectureExample {
 		
 		
 		Map<TaskAgent, Double> payments = qm.getPayments(typeProfile);
-		System.out.println(payments); // TODO: ordered pretty print
-		Assert.assertEquals(payments.get(r1).doubleValue(), -20, 0.001);
-		Assert.assertEquals(payments.get(r2).doubleValue(), 0, 0.001);
-		Assert.assertEquals(payments.get(r3).doubleValue(), -23, 0.001);
+		// System.out.println(payments); // TODO: ordered pretty print
+		Assert.assertEquals(-20, payments.get(r1).doubleValue(), 0.001);
+		Assert.assertEquals(0, payments.get(r2).doubleValue(), 0.001);
+		Assert.assertEquals(-23, payments.get(r3).doubleValue(), 0.001);
 	}
 
+	// TODO: in selection und payments aufteilen
 	@Test
 	public void testLectureExampleBonus() {
 		QuasilinearMechanism<TaskAgent, Shift> qm = new BonusCompensationMechanism(problem);
 		// make sure your selection and payment functions are implemented correctly
 		Shift selectedShift = qm.selection(typeProfile);
 		
-		Map<Integer, TaskAgent> shiftAssignment = selectedShift.getAssignment(); 
+		Map<Integer, TaskAgent> shiftAssignment = selectedShift.getAssignment();
+		// Die Laufzeitkomplexität des Suchalgorithmus ist O(n^m) (alle möglichen Zuweisungen der Tasks an Agenten durchprobieren)
 		
 		System.out.println("Selected shift: " + selectedShift.toString());
 		// get the correct assignment
 		Assert.assertEquals(r3, shiftAssignment.get(drill));
 		Assert.assertEquals(r1, shiftAssignment.get(insert));
 		Assert.assertEquals(r1, shiftAssignment.get(tighten));
+		
+		Map<TaskAgent, Double> payments = qm.getPayments(typeProfile);
+		System.out.println(payments); // TODO: ordered pretty print
+		Assert.assertEquals(-20, payments.get(r1).doubleValue(), 0.001);
+		Assert.assertEquals(0, payments.get(r2).doubleValue(), 0.001);
+		Assert.assertEquals(-12, payments.get(r3).doubleValue(), 0.001);
+	}
+	
+	// for debugging without junit environment 
+	public static void main(String[] args) throws Exception {
+		LectureExample example = new LectureExample();
+		example.setUp();
+		QuasilinearMechanism<TaskAgent, Shift> qm = new BonusCompensationMechanism(example.problem);
+		// make sure your selection and payment functions are implemented correctly
+
+		Map<TaskAgent, Double> payments = qm.getPayments(example.typeProfile);
 	}
 }
