@@ -32,10 +32,10 @@ public class ExperimentSetup {
 	// Parameters
 
 	@Parameter // first data value (0) is default
-	public /* NOT private */ int m;
+	public /* NOT private */ int n;
 
 	@Parameter(value = 1)
-	public /* NOT private */ int n;
+	public /* NOT private */ int m;
 
 	@Parameter(value = 2)
 	public /* NOT private */ double tMin;
