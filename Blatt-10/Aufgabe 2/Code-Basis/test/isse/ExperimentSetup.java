@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.math3.stat.inference.TTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -180,7 +181,21 @@ public class ExperimentSetup {
 		System.out.println(problem);
 		runCount++;	
 	}
-		System.out.println(Arrays.toString(lyingPayments));
-		System.out.println(Arrays.toString(honestPayments));		
+		System.out.println("Lügner: "+Arrays.toString(lyingPayments));
+		System.out.println(mean(lyingPayments));
+		System.out.println("Ehrlicher Agent: "+Arrays.toString(honestPayments));
+		System.out.println(mean(honestPayments));
+		
+		TTest tTest = new TTest();
+		System.out.println(tTest.pairedTTest(lyingPayments, honestPayments));
 	}
+	
+	public static double mean(double [] d){
+		double sum = 0;
+		for (int i = 0; i < d.length; i++){
+			sum += d[i];
+		}
+		return sum/d.length;
+	}
+	
 }
