@@ -42,6 +42,9 @@ public class ExperimentSetup {
 	@Parameter(value = 3)
 	public /* NOT private */ double tMax;
 	
+	public static double [] honestPayments;
+	public static double [] lyingPayments;
+	
 	
 	// Problem description
 		
@@ -50,6 +53,7 @@ public class ExperimentSetup {
 	private Map<TaskAgent, Valuator<Shift>> typeProfile;
 
 	public ExperimentSetup() {
+
 	}
 
 	protected static Random random = new Random(); // TODO: maybe set constant seed to get same test cases
@@ -78,10 +82,17 @@ public class ExperimentSetup {
 				// we can reuse timesHelper, as BasicHonestAgent makes a copy of the map
 				timesHelper.put(j,  randomMimimalTime());
 			}
-			TaskAgent agent = new LyingAgent(timesHelper);
-			agents.add(i, agent);
-			
-			typeProfile.put(agent, new TaskAgentValuator(agent));
+			if (i == 0){
+				LyingAgent agent = new LyingAgent(timesHelper, true); //Agent 0 lügt
+				agents.add(i, agent);			
+				typeProfile.put(agent, new TaskAgentValuator(agent));
+			}
+			else{
+				LyingAgent agent = new LyingAgent(timesHelper);
+				agents.add(i, agent);			
+				typeProfile.put(agent, new TaskAgentValuator(agent));
+			}
+
 		}
 		
 		problem = new SchedulingProblem(agents.size(), agents);
@@ -99,7 +110,26 @@ public class ExperimentSetup {
 		System.out.println(n);
 		System.out.println(tMin);
 		System.out.println(tMax);
+		QuasilinearMechanism<TaskAgent, Shift> qm = new BonusCompensationMechanism(problem);
+		// make sure your selection and payment functions are implemented correctly
+		Shift selectedShift = qm.selection(typeProfile);
 		
+		Map<Integer, TaskAgent> shiftAssignment = selectedShift.getAssignment();
+		Map<TaskAgent, Double> payments = qm.getPayments(typeProfile);
+		
+		
+		honestPayments = new double [m];
+		lyingPayments = new double [m];
+		int count = 0;
+		for (TaskAgent ta : payments.keySet()){
+			honestPayments[count] = payments.get(ta);
+			count++;
+		}
+		System.out.print("\n");
+		System.out.print("Payments: ");
+		for (int i = 0; i < honestPayments.length; i++){
+			System.out.print(honestPayments[i]+"\t");
+		}
 		// privater Nutzen ist: payment für Agent i - tatsächlich gemessene Spanne für Agent i (TaskAgentValuator.getActualSpan)
 		
 		// LyingAgent hat globales Flag LyingAgent.nobodyCanBeTrusted und auch pro Agent kann man angeben, ob er lügt
