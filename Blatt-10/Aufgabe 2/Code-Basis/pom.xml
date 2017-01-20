@@ -29,5 +29,11 @@
 			<artifactId>commons-math3</artifactId>
 			<version>3.6.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId> <!-- hamcrest has no fluid api, use assertj or google truth -->
+			<artifactId>assertj-core</artifactId>
+			<version>3.6.1</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

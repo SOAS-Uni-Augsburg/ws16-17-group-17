@@ -112,7 +112,7 @@ public class BonusCompensationMechanism extends QuasilinearMechanism<TaskAgent, 
 	}
 	
 	// TODO: Über permutationen schreiben
-	// Micha: eigentlich Variation mit Wiederholung, afu English aber
+	// Micha: eigentlich Variation mit Wiederholung, auf English aber
 	// k-permutation, siehe
 	// https://de.wikipedia.org/wiki/Variation_(Kombinatorik)#Variation_mit_Wiederholung
 	public ArrayList<String> caculatePossibleShifts(){
