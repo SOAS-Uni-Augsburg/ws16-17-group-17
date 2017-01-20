@@ -10,7 +10,9 @@ import java.util.Random;
 
 import org.apache.commons.math3.stat.inference.TTest;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -26,7 +28,7 @@ import isse.agents.TaskAgentValuator;
 public class ExperimentSetup {
 	@Parameters(name = "{index}: scheduling problem with {0} agents, {1} tasks and minimal time in interval [{2}, {3}]")
 	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] { { 3, 2, 1.0, 50.0 }, { 3, 3, 1.0, 50.0 }, { 3, 5, 1.0, 50.0 } });
+		return Arrays.asList(new Object[][] { { 3, 2, 1.0, 50.0 }, { 3, 3, 1.0, 50.0 }, { 3, 5, 1.0, 50.0 }, { 5, 3, 1.0, 50.0 } });
 	}
 	
 	// Parameters
@@ -75,35 +77,44 @@ public class ExperimentSetup {
 	@Before
 	public void setUp() throws Exception {
 		HashMap<Integer, Double> timesHelper = new HashMap<Integer, Double>();
-		
+
 		List<TaskAgent> agents = new ArrayList<>();
-		
+
 		typeProfile = new HashMap<TaskAgent, Valuator<Shift>>();
-		
+
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
 				// we can reuse timesHelper, as BasicHonestAgent makes a copy of the map
-				timesHelper.put(j,  randomMimimalTime());
+				timesHelper.put(j, randomMimimalTime());
 			}
-			if (i == 0){
-				LyingAgent agent = new LyingAgent(timesHelper, true); //Agent 0 lügt
-				agents.add(i, agent);			
-				typeProfile.put(agent, new TaskAgentValuator(agent));
-			}
-			else{
-				LyingAgent agent = new LyingAgent(timesHelper);
-				agents.add(i, agent);			
-				typeProfile.put(agent, new TaskAgentValuator(agent));
-			}
+			TaskAgent agent = new LyingAgent(timesHelper); // default: lügt nicht
+			agents.add(i, agent);
 
+			typeProfile.put(agent, new TaskAgentValuator(agent));
 		}
-		
-		problem = new SchedulingProblem(agents.size(), agents);
+
+		problem = new SchedulingProblem(m, agents);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		// nothing to do yet
+	}
+	
+	@Test
+	public void testBonusCompensationMechanismRunsWithoutExceptions() {
+		System.out.printf("Test of scheduling problem with %d agents, %d tasks and minimal time in interval [%f, %f] started.%n", n, m, tMin, tMax);
+		
+		QuasilinearMechanism<TaskAgent, Shift> qm = new BonusCompensationMechanism(problem);
+		// make sure your selection and payment functions are implemented correctly
+		Shift selectedShift = qm.selection(typeProfile);
+		
+		System.out.println("Selected shift: " + selectedShift.toString());
+		
+		Map<TaskAgent, Double> payments = qm.getPayments(typeProfile);
+		System.out.println(payments); // TODO: ordered pretty print
+		
+		System.out.println("Test ended.");
 	}
 	
 	@Test
@@ -147,13 +158,13 @@ public class ExperimentSetup {
 
 			}
 			
-			problem = new SchedulingProblem(agents.size(), agents);
+			problem = new SchedulingProblem(m, agents);
 		
 		//eigentlicher Test
 			
 		System.out.println("Test started.");
-		System.out.println(m);
 		System.out.println(n);
+		System.out.println(m);
 		System.out.println(tMin);
 		System.out.println(tMax);
 		QuasilinearMechanism<TaskAgent, Shift> qm = new BonusCompensationMechanism(problem);

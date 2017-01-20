@@ -3,10 +3,9 @@ package isse.agents;
 import java.util.HashMap;
 
 public class LyingAgent extends BasicHonestAgent {
-	public static boolean nobodyCanByTrusted = false;
+	private static boolean nobodyCanByTrusted = false;
 	
 	private boolean isLying = false;
-	
 	
 	public LyingAgent(HashMap<Integer, Double> minimalTimes) {
 		super(minimalTimes);
@@ -15,9 +14,6 @@ public class LyingAgent extends BasicHonestAgent {
 	public LyingAgent(HashMap<Integer, Double> minimalTimes, boolean lying) {
 		super(minimalTimes);
 		setLying(lying);
-		this.minimalTimes = new HashMap<Integer, Double>(minimalTimes);
-		this.announcedTimes = new HashMap<Integer, Double>(minimalTimes);
-		this.actualTimes = new HashMap<Integer, Double>(minimalTimes);
 	}
 	
 	@Override
@@ -28,17 +24,21 @@ public class LyingAgent extends BasicHonestAgent {
 	@Override
 	public double getAnnouncedTime(int taskKey) {
 		if (isLying || nobodyCanByTrusted) {
-			return getMinimalTime(taskKey) - 1; // man kann es auch randomisiert machen, dann aber in protected Map<Integer, Double> announcedTimes; speichern und dadurch immer das Gleiche ausgeben
+			return getMinimalTime(taskKey) - 1;
+			// man kann es auch randomisiert machen, dann aber in protected Map<Integer, Double> announcedTimes; im Konstruktor speichern
+			// und dadurch mit super.getAnnouncedTime(taskKey); immer das Gleiche ausgeben
 		}
-		return super.getAnnouncedTime(taskKey);
+		return super.getMinimalTime(taskKey);
 	}
 
 	@Override
 	public double getActualTime(int taskKey) {
 		if (isLying || nobodyCanByTrusted) {
-			return getMinimalTime(taskKey) + 5;  // man kann es auch randomisiert machen, dann aber in protected Map<Integer, Double> actualTimes; speichern und dadurch immer das Gleiche ausgeben
+			return getMinimalTime(taskKey) + 5; 
+			// man kann es auch randomisiert machen, dann aber in protected Map<Integer, Double> actualTimes; im Konstruktor speichern
+			// und dadurch mit super.getActualTime(taskKey); immer das Gleiche ausgeben
 		}
-		return super.getActualTime(taskKey);
+		return super.getMinimalTime(taskKey);
 	}
 
 	public boolean isLying() {

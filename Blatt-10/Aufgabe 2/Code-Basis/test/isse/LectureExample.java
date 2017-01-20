@@ -18,6 +18,8 @@ import org.junit.Test;
 
 public class LectureExample {
 
+	private static final int NUM_TASKS = 3;
+
 	private final int drill = 0, insert = 1, tighten = 2;
 	
 	private TaskAgent r3;
@@ -49,7 +51,7 @@ public class LectureExample {
 		
 		List<TaskAgent> agents = Arrays.asList(r1, r2,r3);
 
-		problem = new SchedulingProblem(agents.size(), agents);
+		problem = new SchedulingProblem(NUM_TASKS, agents);
 		
 		typeProfile = new HashMap<TaskAgent, Valuator<Shift>>();
 		typeProfile.put(r1, new TaskAgentValuator(r1));
